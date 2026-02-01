@@ -2,13 +2,13 @@
   "name": "tyafe",
   "version": "0.0.1",
   "description": "A lightweight, type-first validation library for TypeScript with zero dependencies",
-  "main": "./dist/index.js",
+  "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.cts",
   "exports": {
     ".": {
+      "require": "./dist/index.cjs",
       "import": "./dist/index.mjs",
-      "require": "./dist/index.js",
       "types": "./dist/index.d.cts"
     }
   },
