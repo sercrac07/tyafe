@@ -21,12 +21,12 @@
     "build": "tsdown",
     "test": "vitest run",
     "test:watch": "vitest",
-    "lint": "biome lint",
-    "lint:fix": "biome lint --fix",
-    "format": "biome format",
-    "format:fix": "biome format --fix",
+    "lint": "biome lint src",
+    "lint:fix": "biome lint --fix src",
+    "format": "biome format src",
+    "format:fix": "biome format --fix src",
     "typecheck": "tsc --noEmit",
-    "prepublishOnly": "npm run build && npm run test && npm run typecheck",
+    "prepublishOnly": "npm run build && npm run test && npm run typecheck && npm run lint && npm run format",
     "release": "npm run prepublishOnly && npm publish"
   },
   "keywords": [
