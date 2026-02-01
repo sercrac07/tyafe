@@ -4,12 +4,12 @@
   "description": "A lightweight, type-first validation library for TypeScript with zero dependencies",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/index.d.cts",
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
       "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "types": "./dist/index.d.cts"
     }
   },
   "files": [
@@ -59,6 +59,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.13",
+    "tsdown": "0.20.1",
     "typescript": "5.9.3",
     "vitest": "4.0.18"
   }
