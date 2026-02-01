@@ -21,7 +21,6 @@
     "build": "tsdown",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage",
     "lint": "biome lint",
     "lint:fix": "biome lint --fix",
     "format": "biome format",
@@ -60,6 +59,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.13",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "vitest": "4.0.18"
   }
 }

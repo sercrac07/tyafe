@@ -5,10 +5,6 @@ node_modules/
 src/
 test/
 
-# Development
-*.test.ts
-coverage/
-
 # Config
 tsconfig.json
 biome.json
