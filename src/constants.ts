@@ -11,6 +11,13 @@ export const ERROR_CODES = {
     EMAIL: "string.email",
     URL: "string.url",
   },
+  NUMBER: {
+    MIN: "number.min",
+    MAX: "number.max",
+    INTEGER: "number.integer",
+    POSITIVE: "number.positive",
+    NEGATIVE: "number.negative",
+  },
 } as const;
 
 export const REGEXES = {
