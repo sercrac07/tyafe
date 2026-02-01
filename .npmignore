@@ -8,6 +8,7 @@ test/
 # Config
 tsconfig.json
 biome.json
+tsdown.config.ts
 
 # Git
 .git/
