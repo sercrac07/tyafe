@@ -34,6 +34,9 @@ export class TyafeNumber extends TyafeBase<number, number, { error: string }> {
     return newThis;
   }
 
+  /**
+   * Ensures number is greater than or equal to `value`.
+   */
   public min(minValue: number, config?: string | ValidatorConfig): this {
     const issue = this.buildIssue(
       ERROR_CODES.NUMBER.MIN,
@@ -44,6 +47,9 @@ export class TyafeNumber extends TyafeBase<number, number, { error: string }> {
     this.validate((value) => (value >= minValue ? null : issue));
     return this;
   }
+  /**
+   * Ensures number is less than or equal to `value`.
+   */
   public max(maxValue: number, config?: string | ValidatorConfig): this {
     const issue = this.buildIssue(
       ERROR_CODES.NUMBER.MAX,
@@ -54,6 +60,9 @@ export class TyafeNumber extends TyafeBase<number, number, { error: string }> {
     this.validate((value) => (value <= maxValue ? null : issue));
     return this;
   }
+  /**
+   * Ensures number is an integer.
+   */
   public integer(config?: string | ValidatorConfig): this {
     const issue = this.buildIssue(
       ERROR_CODES.NUMBER.INTEGER,
@@ -64,6 +73,9 @@ export class TyafeNumber extends TyafeBase<number, number, { error: string }> {
     this.validate((value) => (Number.isInteger(value) ? null : issue));
     return this;
   }
+  /**
+   * Ensures number is strictly greater than `0`.
+   */
   public positive(config?: string | ValidatorConfig): this {
     const issue = this.buildIssue(
       ERROR_CODES.NUMBER.POSITIVE,
@@ -74,6 +86,9 @@ export class TyafeNumber extends TyafeBase<number, number, { error: string }> {
     this.validate((value) => (value > 0 ? null : issue));
     return this;
   }
+  /**
+   * Ensures number is strictly less than `0`.
+   */
   public negative(config?: string | ValidatorConfig): this {
     const issue = this.buildIssue(
       ERROR_CODES.NUMBER.NEGATIVE,
