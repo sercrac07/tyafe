@@ -12,6 +12,12 @@ import { TyafeUndefined } from "./primitives/undefined";
 import { TyafeArray } from "./structural/array";
 import type { LiteralParts } from "./types";
 
+/**
+ * Creates a string schema validator optionally configured with a custom error message.
+ *
+ * @param error - Optional error message to use when validation fails
+ * @returns A TyafeString instance configured with the provided `error`
+ */
 export function string(error?: string): TyafeString {
   return new TyafeString(error);
 }
@@ -51,10 +57,23 @@ export function date(error?: string): TyafeDate {
   return new TyafeDate(error);
 }
 
+/**
+ * Creates a file schema configured with an optional custom error message.
+ *
+ * @param error - Optional custom error message used when validation fails
+ * @returns A TyafeFile schema instance configured with the provided `error`
+ */
 export function file(error?: string): TyafeFile {
   return new TyafeFile(error);
 }
 
+/**
+ * Creates an array schema for elements matching the given schema.
+ *
+ * @param schema - Schema that each array element must satisfy
+ * @param error - Optional custom error message to use when validation fails
+ * @returns A `TyafeArray` configured with the provided element schema and error message
+ */
 export function array<T extends TyafeBase<any, any>>(
   schema: T,
   error?: string,
