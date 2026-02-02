@@ -1,5 +1,6 @@
 import { TyafeBigint } from "./primitives/bigint";
 import { TyafeBoolean } from "./primitives/boolean";
+import { TyafeNull } from "./primitives/null";
 import { TyafeNumber } from "./primitives/number";
 import { TyafeString } from "./primitives/string";
 import { TyafeSymbol } from "./primitives/symbol";
@@ -29,4 +30,8 @@ function undefined_s(error?: string): TyafeUndefined {
   return new TyafeUndefined(error);
 }
 
-export { undefined_s as undefined };
+function null_s(error?: string): TyafeNull {
+  return new TyafeNull(error);
+}
+
+export { undefined_s as undefined, null_s as null };
