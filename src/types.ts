@@ -75,6 +75,8 @@ export type TyafeBaseConfig<
 export type ValidatorConfig<ExtraConfig extends Record<string, unknown> = {}> =
   Partial<Omit<Issue, "path">> & ExtraConfig;
 
+export type LiteralParts = string | number | bigint | boolean;
+
 /**
  * Utility type representing a value or a promise of a value.
  */
