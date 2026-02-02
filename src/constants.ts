@@ -33,6 +33,11 @@ export const ERROR_CODES = {
     MAX: "file.max",
     MIME: "file.mime",
   },
+  ARRAY: {
+    NON_EMPTY: "array.non_empty",
+    MIN: "array.min",
+    MAX: "array.max",
+  },
 } as const;
 
 export const REGEXES = {

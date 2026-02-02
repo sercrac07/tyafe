@@ -1,3 +1,4 @@
+import type { TyafeBase } from "./core/base";
 import { TyafeBigint } from "./primitives/bigint";
 import { TyafeBoolean } from "./primitives/boolean";
 import { TyafeDate } from "./primitives/date";
@@ -8,6 +9,7 @@ import { TyafeNumber } from "./primitives/number";
 import { TyafeString } from "./primitives/string";
 import { TyafeSymbol } from "./primitives/symbol";
 import { TyafeUndefined } from "./primitives/undefined";
+import { TyafeArray } from "./structural/array";
 import type { LiteralParts } from "./types";
 
 export function string(error?: string): TyafeString {
@@ -51,6 +53,13 @@ export function date(error?: string): TyafeDate {
 
 export function file(error?: string): TyafeFile {
   return new TyafeFile(error);
+}
+
+export function array<T extends TyafeBase<any, any>>(
+  schema: T,
+  error?: string,
+): TyafeArray<T> {
+  return new TyafeArray(schema, error);
 }
 
 export { undefined_s as undefined, null_s as null };
