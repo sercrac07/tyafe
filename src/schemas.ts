@@ -12,12 +12,13 @@ import { TyafeUndefined } from "./primitives/undefined";
 import { TyafeBooleanish } from "./special/booleanish";
 import { TyafeIntersection } from "./special/intersection";
 import { TyafeLazy } from "./special/lazy";
+import { TyafeMutate } from "./special/mutate";
 import { TyafeUnion } from "./special/union";
 import { TyafeArray } from "./structural/array";
 import { TyafeObject } from "./structural/object";
 import { TyafeRecord } from "./structural/record";
 import { TyafeTuple } from "./structural/tuple";
-import type { LiteralParts } from "./types";
+import type { Input, LiteralParts, Mutator, Output } from "./types";
 import { TyafeNullable } from "./utility/nullable";
 import { TyafeNullish } from "./utility/nullish";
 import { TyafeOptional } from "./utility/optional";
@@ -135,6 +136,17 @@ export function lazy<T extends TyafeBase<any, any>>(
   schema: () => T,
 ): TyafeLazy<T> {
   return new TyafeLazy(schema);
+}
+
+export function mutate<
+  From extends TyafeBase<any, any>,
+  To extends TyafeBase<any, any>,
+>(
+  from: From,
+  to: To,
+  mutator: Mutator<Output<From>, Input<To>>,
+): TyafeMutate<From, To> {
+  return new TyafeMutate(from, to, mutator);
 }
 
 export { undefined_s as undefined, null_s as null };

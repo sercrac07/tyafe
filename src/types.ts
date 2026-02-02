@@ -76,7 +76,14 @@ export type Validator<O> = (
  * Processor function that transforms an output-typed value and returns the new value with the same type.
  */
 export type Processor<O> = (value: O) => MaybePromise<O>;
+/**
+ * Preprocessor function that converts a raw value into the schema's input type.
+ */
 export type Preprocessor<T, I> = (value: T) => MaybePromise<I>;
+/**
+ * Function that maps one type to another, used by `mutate` schema.
+ */
+export type Mutator<From, To> = (value: From) => MaybePromise<To>;
 
 export type TyafeBaseConfig<
   I,
