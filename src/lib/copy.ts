@@ -14,6 +14,13 @@ export function deepCopy<T>(value: T): T {
     return new Date(value.getTime()) as T;
   }
 
+  if (value instanceof File) {
+    return new File([value], value.name, {
+      lastModified: value.lastModified,
+      type: value.type,
+    }) as T;
+  }
+
   // Objects
   const result = {} as T;
   for (const key in value) {

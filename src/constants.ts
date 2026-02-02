@@ -28,6 +28,11 @@ export const ERROR_CODES = {
     MIN: "date.min",
     MAX: "date.max",
   },
+  FILE: {
+    MIN: "file.min",
+    MAX: "file.max",
+    MIME: "file.mime",
+  },
 } as const;
 
 export const REGEXES = {

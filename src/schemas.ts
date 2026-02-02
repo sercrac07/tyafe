@@ -1,6 +1,7 @@
 import { TyafeBigint } from "./primitives/bigint";
 import { TyafeBoolean } from "./primitives/boolean";
 import { TyafeDate } from "./primitives/date";
+import { TyafeFile } from "./primitives/file";
 import { TyafeLiteral } from "./primitives/literal";
 import { TyafeNull } from "./primitives/null";
 import { TyafeNumber } from "./primitives/number";
@@ -46,6 +47,10 @@ export function literal<T extends LiteralParts>(
 
 export function date(error?: string): TyafeDate {
   return new TyafeDate(error);
+}
+
+export function file(error?: string): TyafeFile {
+  return new TyafeFile(error);
 }
 
 export { undefined_s as undefined, null_s as null };
