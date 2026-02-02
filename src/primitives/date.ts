@@ -25,7 +25,7 @@ export class TyafeDate extends TyafeBase<Date, Date, { error: string }> {
       ]);
     }
 
-    return input;
+    return deepCopy(input);
   }
 
   public override clone(): TyafeDate {
