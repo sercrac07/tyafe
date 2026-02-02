@@ -99,7 +99,7 @@ export abstract class TyafeBase<
    * Safely parses the input and returns a `Result` instead of throwing.
    * Wraps `parse` in a try-catch block.
    *
-   * Note: Using async validators/processors will throw `TyrunRuntimeError`.
+   * Note: Using async validators/processors will throw `TyafeError`.
    * Use `safeParseAsync` when async behavior is required.
    */
   public safeParse(input?: unknown): Result<O> {
