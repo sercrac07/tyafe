@@ -2,7 +2,6 @@ import { ERROR_CODES } from "../constants";
 import { TyafeBase } from "../core/base";
 import { TyafeIssue } from "../errors";
 import { deepCopy } from "../lib/copy";
-import type { MaybePromise } from "../types";
 
 export class TyafeSymbol extends TyafeBase<symbol, symbol, { error: string }> {
   public override readonly kind: "symbol" = "symbol";
@@ -18,7 +17,7 @@ export class TyafeSymbol extends TyafeBase<symbol, symbol, { error: string }> {
     });
   }
 
-  protected override parseFunction(input: unknown): MaybePromise<symbol> {
+  protected override parseFunction(input: unknown): symbol {
     if (typeof input !== "symbol") {
       throw new TyafeIssue([
         this.buildIssue(ERROR_CODES.CORE.INVALID_TYPE, this._config.error),
@@ -26,6 +25,9 @@ export class TyafeSymbol extends TyafeBase<symbol, symbol, { error: string }> {
     }
 
     return input;
+  }
+  protected override async parseFunctionAsync(input: unknown): Promise<symbol> {
+    return this.parseFunction(input);
   }
 
   public override clone(): TyafeSymbol {

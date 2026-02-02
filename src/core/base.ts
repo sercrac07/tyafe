@@ -32,7 +32,8 @@ export abstract class TyafeBase<
   /**
    * Function that contains all the main logic and asserts that the input type is the wanted one.
    */
-  protected abstract parseFunction(input: unknown): MaybePromise<O>;
+  protected abstract parseFunction(input: unknown): O;
+  protected abstract parseFunctionAsync(input: unknown): Promise<O>;
 
   /**
    * Parses the input and returns the output type.
@@ -50,12 +51,6 @@ export abstract class TyafeBase<
       const preprocessed = this.runPreprocessors(input);
 
       const result = this.parseFunction(deepCopy(preprocessed));
-
-      if (result instanceof Promise) {
-        throw new TyafeError(
-          "Async schemas must be parsed with an async parser",
-        );
-      }
 
       const issues = this.runValidators(result);
       if (issues.length > 0) {
@@ -83,7 +78,7 @@ export abstract class TyafeBase<
 
       const preprocessed = await this.runPreprocessorsAsync(input);
 
-      const result = await this.parseFunction(deepCopy(preprocessed));
+      const result = await this.parseFunctionAsync(deepCopy(preprocessed));
 
       const issues = await this.runValidatorsAsync(result);
       if (issues.length > 0) {

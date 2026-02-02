@@ -2,7 +2,7 @@ import { ERROR_CODES } from "../constants";
 import { TyafeBase } from "../core/base";
 import { TyafeIssue } from "../errors";
 import { deepCopy } from "../lib/copy";
-import type { MaybePromise, ValidatorConfig } from "../types";
+import type { ValidatorConfig } from "../types";
 
 export class TyafeDate extends TyafeBase<Date, Date, { error: string }> {
   public override readonly kind: "date" = "date";
@@ -18,7 +18,7 @@ export class TyafeDate extends TyafeBase<Date, Date, { error: string }> {
     });
   }
 
-  protected override parseFunction(input: unknown): MaybePromise<Date> {
+  protected override parseFunction(input: unknown): Date {
     if (!(input instanceof Date) || Number.isNaN(input.getTime())) {
       throw new TyafeIssue([
         this.buildIssue(ERROR_CODES.CORE.INVALID_TYPE, this._config.error),
@@ -26,6 +26,9 @@ export class TyafeDate extends TyafeBase<Date, Date, { error: string }> {
     }
 
     return deepCopy(input);
+  }
+  protected override async parseFunctionAsync(input: unknown): Promise<Date> {
+    return this.parseFunction(input);
   }
 
   public override clone(): TyafeDate {

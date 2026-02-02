@@ -2,7 +2,7 @@ import { ERROR_CODES } from "../constants";
 import { TyafeBase } from "../core/base";
 import { TyafeIssue } from "../errors";
 import { deepCopy } from "../lib/copy";
-import type { MaybePromise, ValidatorConfig } from "../types";
+import type { ValidatorConfig } from "../types";
 
 export class TyafeFile extends TyafeBase<File, File, { error: string }> {
   public override readonly kind: "file" = "file";
@@ -18,7 +18,7 @@ export class TyafeFile extends TyafeBase<File, File, { error: string }> {
     });
   }
 
-  protected override parseFunction(input: unknown): MaybePromise<File> {
+  protected override parseFunction(input: unknown): File {
     if (!(input instanceof File)) {
       throw new TyafeIssue([
         this.buildIssue(ERROR_CODES.CORE.INVALID_TYPE, this._config.error),
@@ -26,6 +26,9 @@ export class TyafeFile extends TyafeBase<File, File, { error: string }> {
     }
 
     return deepCopy(input);
+  }
+  protected override async parseFunctionAsync(input: unknown): Promise<File> {
+    return this.parseFunction(input);
   }
 
   public override clone(): TyafeFile {

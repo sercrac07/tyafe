@@ -2,7 +2,7 @@ import { ERROR_CODES } from "../constants";
 import { TyafeBase } from "../core/base";
 import { TyafeIssue } from "../errors";
 import { deepCopy } from "../lib/copy";
-import type { LiteralParts, MaybePromise } from "../types";
+import type { LiteralParts } from "../types";
 
 export class TyafeLiteral<T extends LiteralParts> extends TyafeBase<
   T,
@@ -27,7 +27,7 @@ export class TyafeLiteral<T extends LiteralParts> extends TyafeBase<
     this.value = value;
   }
 
-  protected override parseFunction(input: unknown): MaybePromise<T> {
+  protected override parseFunction(input: unknown): T {
     if (input !== this.value) {
       throw new TyafeIssue([
         this.buildIssue(ERROR_CODES.CORE.INVALID_TYPE, this._config.error),
@@ -35,6 +35,9 @@ export class TyafeLiteral<T extends LiteralParts> extends TyafeBase<
     }
 
     return input as T;
+  }
+  protected override async parseFunctionAsync(input: unknown): Promise<T> {
+    return this.parseFunction(input);
   }
 
   public override clone(): TyafeLiteral<T> {

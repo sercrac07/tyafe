@@ -2,7 +2,7 @@ import { ERROR_CODES } from "../constants";
 import { TyafeBase } from "../core/base";
 import { TyafeIssue } from "../errors";
 import { deepCopy } from "../lib/copy";
-import type { MaybePromise, ValidatorConfig } from "../types";
+import type { ValidatorConfig } from "../types";
 
 export class TyafeNumber extends TyafeBase<number, number, { error: string }> {
   public override readonly kind: "number" = "number";
@@ -18,7 +18,7 @@ export class TyafeNumber extends TyafeBase<number, number, { error: string }> {
     });
   }
 
-  protected override parseFunction(input: unknown): MaybePromise<number> {
+  protected override parseFunction(input: unknown): number {
     if (typeof input !== "number" || Number.isNaN(input)) {
       throw new TyafeIssue([
         this.buildIssue(ERROR_CODES.CORE.INVALID_TYPE, this._config.error),
@@ -26,6 +26,9 @@ export class TyafeNumber extends TyafeBase<number, number, { error: string }> {
     }
 
     return input;
+  }
+  protected override async parseFunctionAsync(input: unknown): Promise<number> {
+    return this.parseFunction(input);
   }
 
   public override clone(): TyafeNumber {
