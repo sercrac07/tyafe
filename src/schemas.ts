@@ -11,6 +11,7 @@ import { TyafeSymbol } from "./primitives/symbol";
 import { TyafeUndefined } from "./primitives/undefined";
 import { TyafeArray } from "./structural/array";
 import { TyafeObject } from "./structural/object";
+import { TyafeRecord } from "./structural/record";
 import type { LiteralParts } from "./types";
 
 export function string(error?: string): TyafeString {
@@ -68,6 +69,13 @@ export function object<T extends Record<string, TyafeBase<any, any>>>(
   error?: string,
 ): TyafeObject<T> {
   return new TyafeObject(shape, error);
+}
+
+export function record<
+  Key extends TyafeBase<string, string>,
+  Value extends TyafeBase<any, any>,
+>(key: Key, value: Value, error?: string): TyafeRecord<Key, Value> {
+  return new TyafeRecord(key, value, error);
 }
 
 export { undefined_s as undefined, null_s as null };
