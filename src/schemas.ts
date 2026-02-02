@@ -10,6 +10,7 @@ import { TyafeString } from "./primitives/string";
 import { TyafeSymbol } from "./primitives/symbol";
 import { TyafeUndefined } from "./primitives/undefined";
 import { TyafeBooleanish } from "./special/booleanish";
+import { TyafeUnion } from "./special/union";
 import { TyafeArray } from "./structural/array";
 import { TyafeObject } from "./structural/object";
 import { TyafeRecord } from "./structural/record";
@@ -114,6 +115,12 @@ export function booleanish(
   error?: string,
 ): TyafeBooleanish {
   return new TyafeBooleanish(trueValues, falseValues, error);
+}
+
+export function union<T extends TyafeBase<any, any>[]>(
+  schemas: [...T],
+): TyafeUnion<T> {
+  return new TyafeUnion(schemas);
 }
 
 export { undefined_s as undefined, null_s as null };
