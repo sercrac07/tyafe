@@ -35,7 +35,7 @@ export class TyafeOptional<T extends TyafeBase<any, any>> extends TyafeBase<
       return undefined;
     }
 
-    return await this.schema.parseAsync();
+    return await this.schema.parseAsync(input);
   }
 
   public override clone(): TyafeOptional<T> {
