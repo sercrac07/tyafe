@@ -15,8 +15,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
   - Special: `booleanish`, `union`, `intersection`, `lazy`, `mutate`, `any`
   - Utility: `optional`, `nullable`, `nullish`
 - Core parsing APIs: `parse`, `parseAsync`, `safeParse`, `safeParseAsync`
+- Pipeline features: `preprocess`, `validate`, `process`, `default`, `fallback`, `clone`
 - Error model: `TyafeIssue` with `Issue[]`, `TyafeError`
-- Type utilities: `Input`, `Output`, `Default`, `Validator`, `Processor`, `Preprocessor`, `MaybePromise`
+- Type utilities: `Input`, `Output`, `InputIntersection`, `OutputIntersection`, `Default`, `Validator`, `Processor`, `Preprocessor`, `Mutator`, `MaybePromise`, `Prettify`
 - Test suite with `vitest` covering all schemas and base functionality
 - Package exports: `t` (schemas), `ERROR_CODES`, `TyafeError`, `TyafeIssue`, `T` (types)
 - Documentation: README with Quick Start and examples
