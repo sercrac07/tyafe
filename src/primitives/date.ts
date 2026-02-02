@@ -40,7 +40,7 @@ export class TyafeDate extends TyafeBase<Date, Date, { error: string }> {
   public min(date: Date, config?: string | ValidatorConfig): this {
     const issue = this.buildIssue(
       ERROR_CODES.DATE.MIN,
-      `Date must be after ${date.toDateString()}`,
+      `Date must be on or after ${date.toDateString()}`,
       config,
     );
 
@@ -55,7 +55,7 @@ export class TyafeDate extends TyafeBase<Date, Date, { error: string }> {
   public max(date: Date, config?: string | ValidatorConfig): this {
     const issue = this.buildIssue(
       ERROR_CODES.DATE.MAX,
-      `Date must be before ${date.toDateString()}`,
+      `Date must be on or before ${date.toDateString()}`,
       config,
     );
 
