@@ -2,7 +2,6 @@ import { ERROR_CODES } from "../constants";
 import { TyafeBase } from "../core/base";
 import { TyafeIssue } from "../errors";
 import { deepCopy } from "../lib/copy";
-import type { MaybePromise } from "../types";
 
 export class TyafeNull extends TyafeBase<null, null, { error: string }> {
   public override readonly kind: "null" = "null";
@@ -18,7 +17,7 @@ export class TyafeNull extends TyafeBase<null, null, { error: string }> {
     });
   }
 
-  protected override parseFunction(input: unknown): MaybePromise<null> {
+  protected override parseFunction(input: unknown): null {
     if (input !== null) {
       throw new TyafeIssue([
         this.buildIssue(ERROR_CODES.CORE.INVALID_TYPE, this._config.error),
@@ -26,6 +25,9 @@ export class TyafeNull extends TyafeBase<null, null, { error: string }> {
     }
 
     return input;
+  }
+  protected override async parseFunctionAsync(input: unknown): Promise<null> {
+    return this.parseFunction(input);
   }
 
   public override clone(): TyafeNull {

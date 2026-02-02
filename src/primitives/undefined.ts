@@ -2,7 +2,6 @@ import { ERROR_CODES } from "../constants";
 import { TyafeBase } from "../core/base";
 import { TyafeIssue } from "../errors";
 import { deepCopy } from "../lib/copy";
-import type { MaybePromise } from "../types";
 
 export class TyafeUndefined extends TyafeBase<
   undefined,
@@ -22,7 +21,7 @@ export class TyafeUndefined extends TyafeBase<
     });
   }
 
-  protected override parseFunction(input: unknown): MaybePromise<undefined> {
+  protected override parseFunction(input: unknown): undefined {
     if (typeof input !== "undefined") {
       throw new TyafeIssue([
         this.buildIssue(ERROR_CODES.CORE.INVALID_TYPE, this._config.error),
@@ -30,6 +29,11 @@ export class TyafeUndefined extends TyafeBase<
     }
 
     return input;
+  }
+  protected override async parseFunctionAsync(
+    input: unknown,
+  ): Promise<undefined> {
+    return this.parseFunction(input);
   }
 
   public override clone(): TyafeUndefined {

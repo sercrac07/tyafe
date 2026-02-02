@@ -2,7 +2,7 @@ import { ERROR_CODES } from "../constants";
 import { TyafeBase } from "../core/base";
 import { TyafeIssue } from "../errors";
 import { deepCopy } from "../lib/copy";
-import type { MaybePromise, ValidatorConfig } from "../types";
+import type { ValidatorConfig } from "../types";
 
 export class TyafeBigint extends TyafeBase<bigint, bigint, { error: string }> {
   public override readonly kind: "bigint" = "bigint";
@@ -18,7 +18,7 @@ export class TyafeBigint extends TyafeBase<bigint, bigint, { error: string }> {
     });
   }
 
-  protected override parseFunction(input: unknown): MaybePromise<bigint> {
+  protected override parseFunction(input: unknown): bigint {
     if (typeof input !== "bigint") {
       throw new TyafeIssue([
         this.buildIssue(ERROR_CODES.CORE.INVALID_TYPE, this._config.error),
@@ -26,6 +26,9 @@ export class TyafeBigint extends TyafeBase<bigint, bigint, { error: string }> {
     }
 
     return input;
+  }
+  protected override async parseFunctionAsync(input: unknown): Promise<bigint> {
+    return this.parseFunction(input);
   }
 
   public override clone(): TyafeBigint {

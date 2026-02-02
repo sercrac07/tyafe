@@ -27,6 +27,9 @@ export class TyafeString extends TyafeBase<string, string, { error: string }> {
 
     return input;
   }
+  protected override async parseFunctionAsync(input: unknown): Promise<string> {
+    return this.parseFunction(input);
+  }
 
   public override clone(): TyafeString {
     const newThis = new TyafeString();
