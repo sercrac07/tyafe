@@ -9,6 +9,7 @@ import { TyafeNumber } from "./primitives/number";
 import { TyafeString } from "./primitives/string";
 import { TyafeSymbol } from "./primitives/symbol";
 import { TyafeUndefined } from "./primitives/undefined";
+import { TyafeAny } from "./special/any";
 import { TyafeBooleanish } from "./special/booleanish";
 import { TyafeIntersection } from "./special/intersection";
 import { TyafeLazy } from "./special/lazy";
@@ -147,6 +148,10 @@ export function mutate<
   mutator: Mutator<Output<From>, Input<To>>,
 ): TyafeMutate<From, To> {
   return new TyafeMutate(from, to, mutator);
+}
+
+export function any(): TyafeAny {
+  return new TyafeAny();
 }
 
 export { undefined_s as undefined, null_s as null };
