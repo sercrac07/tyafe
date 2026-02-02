@@ -1,3 +1,4 @@
+import { TyafeBigint } from "./primitives/bigint";
 import { TyafeNumber } from "./primitives/number";
 import { TyafeString } from "./primitives/string";
 
@@ -7,4 +8,8 @@ export function string(error?: string): TyafeString {
 
 export function number(error?: string): TyafeNumber {
   return new TyafeNumber(error);
+}
+
+export function bigint(error?: string): TyafeBigint {
+  return new TyafeBigint(error);
 }
