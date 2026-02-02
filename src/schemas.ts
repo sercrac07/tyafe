@@ -15,6 +15,7 @@ import { TyafeRecord } from "./structural/record";
 import { TyafeTuple } from "./structural/tuple";
 import type { LiteralParts } from "./types";
 import { TyafeNullable } from "./utility/nullable";
+import { TyafeNullish } from "./utility/nullish";
 import { TyafeOptional } from "./utility/optional";
 
 export function string(error?: string): TyafeString {
@@ -98,6 +99,12 @@ export function nullable<T extends TyafeBase<any, any>>(
   schema: T,
 ): TyafeNullable<T> {
   return new TyafeNullable(schema);
+}
+
+export function nullish<T extends TyafeBase<any, any>>(
+  schema: T,
+): TyafeNullish<T> {
+  return new TyafeNullish(schema);
 }
 
 export { undefined_s as undefined, null_s as null };
