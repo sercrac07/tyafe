@@ -32,6 +32,7 @@ describe("date schema", () => {
     expect(() => t.date().parse(true)).toThrow();
     expect(() => t.date().parse(null)).toThrow();
     expect(() => t.date().parse(undefined)).toThrow();
+    expect(() => t.date().parse(new Date("invalid"))).toThrow();
 
     expect(() =>
       t.date().min(new Date("2000-07-01")).parse(new Date("2000-06-01")),

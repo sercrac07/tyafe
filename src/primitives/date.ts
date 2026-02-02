@@ -19,7 +19,7 @@ export class TyafeDate extends TyafeBase<Date, Date, { error: string }> {
   }
 
   protected override parseFunction(input: unknown): MaybePromise<Date> {
-    if (!(input instanceof Date)) {
+    if (!(input instanceof Date) || Number.isNaN(input.getTime())) {
       throw new TyafeIssue([
         this.buildIssue(ERROR_CODES.CORE.INVALID_TYPE, this._config.error),
       ]);
