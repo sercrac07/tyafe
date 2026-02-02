@@ -9,6 +9,11 @@ export function deepCopy<T>(value: T): T {
     return value.map((v) => deepCopy(v)) as T;
   }
 
+  // Dates
+  if (value instanceof Date) {
+    return new Date(value.getTime()) as T;
+  }
+
   // Objects
   const result = {} as T;
   for (const key in value) {
