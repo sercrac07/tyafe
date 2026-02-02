@@ -11,6 +11,7 @@ import { TyafeSymbol } from "./primitives/symbol";
 import { TyafeUndefined } from "./primitives/undefined";
 import { TyafeBooleanish } from "./special/booleanish";
 import { TyafeIntersection } from "./special/intersection";
+import { TyafeLazy } from "./special/lazy";
 import { TyafeUnion } from "./special/union";
 import { TyafeArray } from "./structural/array";
 import { TyafeObject } from "./structural/object";
@@ -128,6 +129,12 @@ export function intersection<T extends TyafeBase<any, any>[]>(
   schemas: [...T],
 ): TyafeIntersection<T> {
   return new TyafeIntersection(schemas);
+}
+
+export function lazy<T extends TyafeBase<any, any>>(
+  schema: () => T,
+): TyafeLazy<T> {
+  return new TyafeLazy(schema);
 }
 
 export { undefined_s as undefined, null_s as null };
