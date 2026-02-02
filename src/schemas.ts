@@ -14,6 +14,7 @@ import { TyafeObject } from "./structural/object";
 import { TyafeRecord } from "./structural/record";
 import { TyafeTuple } from "./structural/tuple";
 import type { LiteralParts } from "./types";
+import { TyafeOptional } from "./utility/optional";
 
 export function string(error?: string): TyafeString {
   return new TyafeString(error);
@@ -84,6 +85,12 @@ export function tuple<T extends TyafeBase<any, any>[]>(
   error?: string,
 ): TyafeTuple<T> {
   return new TyafeTuple(schemas, error);
+}
+
+export function optional<T extends TyafeBase<any, any>>(
+  schema: T,
+): TyafeOptional<T> {
+  return new TyafeOptional(schema);
 }
 
 export { undefined_s as undefined, null_s as null };
