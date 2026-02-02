@@ -9,6 +9,7 @@ import { TyafeNumber } from "./primitives/number";
 import { TyafeString } from "./primitives/string";
 import { TyafeSymbol } from "./primitives/symbol";
 import { TyafeUndefined } from "./primitives/undefined";
+import { TyafeBooleanish } from "./special/booleanish";
 import { TyafeArray } from "./structural/array";
 import { TyafeObject } from "./structural/object";
 import { TyafeRecord } from "./structural/record";
@@ -105,6 +106,14 @@ export function nullish<T extends TyafeBase<any, any>>(
   schema: T,
 ): TyafeNullish<T> {
   return new TyafeNullish(schema);
+}
+
+export function booleanish(
+  trueValues: string[],
+  falseValues: string[],
+  error?: string,
+): TyafeBooleanish {
+  return new TyafeBooleanish(trueValues, falseValues, error);
 }
 
 export { undefined_s as undefined, null_s as null };
