@@ -33,7 +33,7 @@ describe("file schema", () => {
         .file()
         .mime(["plain"])
         .parse(new File(["john"], "doe", { lastModified: 0, type: "plain" })),
-    );
+    ).toEqual(new File(["john"], "doe", { lastModified: 0, type: "plain" }));
   });
 
   it("should not parse", () => {
