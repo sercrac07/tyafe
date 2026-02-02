@@ -6,9 +6,9 @@ const _schema = t.lazy(() => t.string());
 const _input: Expect<T.Input<typeof _schema>, string> = null as any;
 const _output: Expect<T.Output<typeof _schema>, string> = null as any;
 
-describe("string schema", () => {
+describe("lazy schema", () => {
   it("should be defined", () => {
-    expect(t.string).toBeDefined();
+    expect(t.lazy).toBeDefined();
   });
 
   it("should parse", () => {
