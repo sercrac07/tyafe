@@ -24,6 +24,10 @@ export const ERROR_CODES = {
     POSITIVE: "bigint.positive",
     NEGATIVE: "bigint.negative",
   },
+  DATE: {
+    MIN: "date.min",
+    MAX: "date.max",
+  },
 } as const;
 
 export const REGEXES = {

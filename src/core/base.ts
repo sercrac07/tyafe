@@ -49,7 +49,7 @@ export abstract class TyafeBase<
 
       const preprocessed = this.runPreprocessors(input);
 
-      const result = this.parseFunction(preprocessed);
+      const result = this.parseFunction(deepCopy(preprocessed));
 
       if (result instanceof Promise) {
         throw new TyafeError(
@@ -83,7 +83,7 @@ export abstract class TyafeBase<
 
       const preprocessed = await this.runPreprocessorsAsync(input);
 
-      const result = await this.parseFunction(preprocessed);
+      const result = await this.parseFunction(deepCopy(preprocessed));
 
       const issues = await this.runValidatorsAsync(result);
       if (issues.length > 0) {
@@ -241,7 +241,7 @@ export abstract class TyafeBase<
     const issues: Issue[] = [];
 
     for (const validator of this._config.validators) {
-      const result = validator(input);
+      const result = validator(deepCopy(input));
 
       if (result instanceof Promise) {
         throw new TyafeError(
@@ -266,7 +266,7 @@ export abstract class TyafeBase<
     const issues: Issue[] = [];
 
     for (const validator of this._config.validators) {
-      const result = await validator(input);
+      const result = await validator(deepCopy(input));
 
       if (result) {
         issues.push(
@@ -285,7 +285,7 @@ export abstract class TyafeBase<
     let processed = input;
 
     for (const processor of this._config.processors) {
-      const value = processor(processed);
+      const value = processor(deepCopy(processed));
 
       if (value instanceof Promise) {
         throw new TyafeError(
@@ -302,7 +302,7 @@ export abstract class TyafeBase<
     let processed = input;
 
     for (const processor of this._config.processors) {
-      const value = await processor(processed);
+      const value = await processor(deepCopy(processed));
       processed = value;
     }
 
@@ -312,7 +312,7 @@ export abstract class TyafeBase<
     let preprocessed = input;
 
     for (const preprocessor of this._config.preprocessors) {
-      const value = preprocessor(preprocessed);
+      const value = preprocessor(deepCopy(preprocessed));
 
       if (value instanceof Promise) {
         throw new TyafeError(
@@ -329,7 +329,7 @@ export abstract class TyafeBase<
     let preprocessed = input;
 
     for (const preprocessor of this._config.preprocessors) {
-      const value = await preprocessor(preprocessed);
+      const value = await preprocessor(deepCopy(preprocessed));
       preprocessed = value;
     }
 
@@ -345,18 +345,18 @@ export abstract class TyafeBase<
         );
       }
 
-      return value;
+      return deepCopy(value);
     }
 
-    return this._config.default as O;
+    return deepCopy(this._config.default as O);
   }
   protected async runDefaultAsync(): Promise<O> {
     if (typeof this._config.default === "function") {
       const value = await (this._config.default as () => MaybePromise<O>)();
-      return value;
+      return deepCopy(value);
     }
 
-    return this._config.default as O;
+    return deepCopy(this._config.default as O);
   }
   protected runFallback(): O {
     if (typeof this._config.fallback === "function") {
@@ -368,17 +368,17 @@ export abstract class TyafeBase<
         );
       }
 
-      return value;
+      return deepCopy(value);
     }
 
-    return this._config.fallback as O;
+    return deepCopy(this._config.fallback as O);
   }
   protected async runFallbackAsync(): Promise<O> {
     if (typeof this._config.fallback === "function") {
       const value = await (this._config.fallback as () => MaybePromise<O>)();
-      return value;
+      return deepCopy(value);
     }
 
-    return this._config.fallback as O;
+    return deepCopy(this._config.fallback as O);
   }
 }
