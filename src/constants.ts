@@ -18,6 +18,12 @@ export const ERROR_CODES = {
     POSITIVE: "number.positive",
     NEGATIVE: "number.negative",
   },
+  BIGINT: {
+    MIN: "bigint.min",
+    MAX: "bigint.max",
+    POSITIVE: "bigint.positive",
+    NEGATIVE: "bigint.negative",
+  },
 } as const;
 
 export const REGEXES = {

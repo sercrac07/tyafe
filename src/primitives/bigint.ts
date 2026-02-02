@@ -1,0 +1,89 @@
+import { ERROR_CODES } from "../constants";
+import { TyafeBase } from "../core/base";
+import { TyafeIssue } from "../errors";
+import { deepCopy } from "../lib/copy";
+import type { MaybePromise, ValidatorConfig } from "../types";
+
+export class TyafeBigint extends TyafeBase<bigint, bigint, { error: string }> {
+  public override readonly kind: "bigint" = "bigint";
+
+  constructor(error?: string) {
+    super({
+      default: undefined,
+      fallback: undefined,
+      validators: [],
+      processors: [],
+      preprocessors: [],
+      error: error || "Invalid input type: bigint was expected",
+    });
+  }
+
+  protected override parseFunction(input: unknown): MaybePromise<bigint> {
+    if (typeof input !== "bigint") {
+      throw new TyafeIssue([
+        this.buildIssue(ERROR_CODES.CORE.INVALID_TYPE, this._config.error),
+      ]);
+    }
+
+    return input;
+  }
+
+  public override clone(): TyafeBigint {
+    const newThis = new TyafeBigint();
+    newThis._config = deepCopy(this._config);
+    return newThis;
+  }
+
+  /**
+   * Ensures bigint is greater than or equal to `value`.
+   */
+  public min(minValue: bigint, config?: string | ValidatorConfig): this {
+    const issue = this.buildIssue(
+      ERROR_CODES.BIGINT.MIN,
+      `Bigint must be at least ${minValue}`,
+      config,
+    );
+
+    this.validate((value) => (value >= minValue ? null : issue));
+    return this;
+  }
+  /**
+   * Ensures bigint is less than or equal to `value`.
+   */
+  public max(maxValue: bigint, config?: string | ValidatorConfig): this {
+    const issue = this.buildIssue(
+      ERROR_CODES.BIGINT.MAX,
+      `Bigint must be at most ${maxValue}`,
+      config,
+    );
+
+    this.validate((value) => (value <= maxValue ? null : issue));
+    return this;
+  }
+  /**
+   * Ensures bigint is strictly greater than `0n`.
+   */
+  public positive(config?: string | ValidatorConfig): this {
+    const issue = this.buildIssue(
+      ERROR_CODES.BIGINT.POSITIVE,
+      "Bigint must be a positive number",
+      config,
+    );
+
+    this.validate((value) => (value > 0n ? null : issue));
+    return this;
+  }
+  /**
+   * Ensures bigint is strictly less than `0n`.
+   */
+  public negative(config?: string | ValidatorConfig): this {
+    const issue = this.buildIssue(
+      ERROR_CODES.BIGINT.NEGATIVE,
+      "Bigint must be a negative number",
+      config,
+    );
+
+    this.validate((value) => (value < 0n ? null : issue));
+    return this;
+  }
+}
