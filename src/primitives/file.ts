@@ -30,7 +30,7 @@ export class TyafeFile extends TyafeBase<File, File, { error: string }> {
 
   public override clone(): TyafeFile {
     const newThis = new TyafeFile();
-    this._config = deepCopy(this._config);
+    newThis._config = deepCopy(this._config);
     return newThis;
   }
 
