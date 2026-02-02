@@ -12,6 +12,25 @@ export type Output<T extends TyafeBase<any, any>> =
   T extends TyafeBase<any, infer O, any> ? O : never;
 
 /**
+ * Recursively composes input types of schemas into their intersection.
+ */
+export type InputIntersection<T extends TyafeBase<any, any>[]> = T extends [
+  infer Head extends TyafeBase<any, any>,
+  ...infer Tail extends TyafeBase<any, any>[],
+]
+  ? Prettify<Input<Head> & InputIntersection<Tail>>
+  : unknown;
+/**
+ * Recursively composes output types of schemas into their intersection.
+ */
+export type OutputIntersection<T extends TyafeBase<any, any>[]> = T extends [
+  infer Head extends TyafeBase<any, any>,
+  ...infer Tail extends TyafeBase<any, any>[],
+]
+  ? Prettify<Output<Head> & OutputIntersection<Tail>>
+  : unknown;
+
+/**
  * Result of a safe parse execution.
  */
 export type Result<O> = Success<O> | Fail;
@@ -81,3 +100,7 @@ export type LiteralParts = string | number | bigint | boolean;
  * Utility type representing a value or a promise of a value.
  */
 export type MaybePromise<T> = T | Promise<T>;
+/**
+ * Flattens intersections and preserves property inference for tooling ergonomics.
+ */
+export type Prettify<T> = { [K in keyof T]: T[K] } & {};
