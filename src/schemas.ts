@@ -1,10 +1,12 @@
 import { TyafeBigint } from "./primitives/bigint";
 import { TyafeBoolean } from "./primitives/boolean";
+import { TyafeLiteral } from "./primitives/literal";
 import { TyafeNull } from "./primitives/null";
 import { TyafeNumber } from "./primitives/number";
 import { TyafeString } from "./primitives/string";
 import { TyafeSymbol } from "./primitives/symbol";
 import { TyafeUndefined } from "./primitives/undefined";
+import type { LiteralParts } from "./types";
 
 export function string(error?: string): TyafeString {
   return new TyafeString(error);
@@ -32,6 +34,13 @@ function undefined_s(error?: string): TyafeUndefined {
 
 function null_s(error?: string): TyafeNull {
   return new TyafeNull(error);
+}
+
+export function literal<T extends LiteralParts>(
+  value: T,
+  error?: string,
+): TyafeLiteral<T> {
+  return new TyafeLiteral(value, error);
 }
 
 export { undefined_s as undefined, null_s as null };
