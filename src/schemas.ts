@@ -10,6 +10,7 @@ import { TyafeString } from "./primitives/string";
 import { TyafeSymbol } from "./primitives/symbol";
 import { TyafeUndefined } from "./primitives/undefined";
 import { TyafeBooleanish } from "./special/booleanish";
+import { TyafeIntersection } from "./special/intersection";
 import { TyafeUnion } from "./special/union";
 import { TyafeArray } from "./structural/array";
 import { TyafeObject } from "./structural/object";
@@ -121,6 +122,12 @@ export function union<T extends TyafeBase<any, any>[]>(
   schemas: [...T],
 ): TyafeUnion<T> {
   return new TyafeUnion(schemas);
+}
+
+export function intersection<T extends TyafeBase<any, any>[]>(
+  schemas: [...T],
+): TyafeIntersection<T> {
+  return new TyafeIntersection(schemas);
 }
 
 export { undefined_s as undefined, null_s as null };
