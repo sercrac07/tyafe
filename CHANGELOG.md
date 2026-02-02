@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - Initial release
 - Runtime schema factories:
-  - Primitives: `string` (`nonEmpty`, `min`, `max`, `regex`, `email`, `url`), `number` (`min`, `max`, `integer`, `positive`, `negative`), `bigint` (`min`, `max`, `positive`, `negative`), `boolean`, `symbol`
+  - Primitives: `string` (`nonEmpty`, `min`, `max`, `regex`, `email`, `url`), `number` (`min`, `max`, `integer`, `positive`, `negative`), `bigint` (`min`, `max`, `positive`, `negative`), `boolean`, `symbol`, `undefined`
 - Core parsing APIs: `parse`, `parseAsync`, `safeParse`, `safeParseAsync`
 - Error model: `TyafeIssue` with `Issue[]`, `TyafeError`
 - Type utilities: `Input`, `Output`, `Default`, `Validator`, `Processor`, `Preprocessor`, `MaybePromise`
