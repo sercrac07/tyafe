@@ -12,7 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Runtime schema factories:
   - Primitives: `string` (`nonEmpty`, `min`, `max`, `regex`, `email`, `url`), `number` (`min`, `max`, `integer`, `positive`, `negative`), `bigint` (`min`, `max`, `positive`, `negative`), `boolean`, `symbol`, `undefined`, `null`, `literal`, `date` (`min`, `max`), `file` (`min`, `max`, `mime`)
   - Structural: `array` (`nonEmpty`, `min`, `max`), `object`, `record`, `tuple`
-  - Special: `booleanish`
+  - Special: `booleanish`, `union`
   - Utility: `optional`, `nullable`, `nullish`
 - Core parsing APIs: `parse`, `parseAsync`, `safeParse`, `safeParseAsync`
 - Error model: `TyafeIssue` with `Issue[]`, `TyafeError`
