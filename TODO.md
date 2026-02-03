@@ -1,5 +1,13 @@
 # Tyafe TODO list
 
+## Global
+
+- [ ] Improve error and informative messages
+- [ ] Remove unnecessary `deepCopy`
+- [ ] Fix naming inconsistencies
+- [ ] Validation bottleneck
+- [ ] Improve schemas configuration
+
 ## Tests
 
 ### Async Testing
@@ -22,6 +30,7 @@
 - [ ] Implement nested error path tracing
 
 ### Data Type Edge Cases
+
 - [ ] Add special number value tests (NaN, Infinity, -Infinity, -0)
 - [ ] Create Unicode string testing (emojis, special characters)
 - [ ] Add encoding edge case tests
@@ -36,5 +45,30 @@
 - [ ] Implement enhanced deep nesting scenarios
 - [ ] Add advanced schema composition testing
 - [ ] Create complex combined schema tests
+
+## Types
+
+- [ ] Add input attribute to display what caused the fail
+
+## TyafeBase
+
+- [ ] Control the usage of deep copy
+
+## TyafeString
+
+- [ ] Add more validators:
+  - [ ] `uuid`
+  - [ ] `json`
+- [ ] Add allowed protocols on `url` validation
+
+## TyafeNumber
+
+- [ ] Missing special number value handling
+- [ ] Add more validators:
+  - [ ] `safeInteger`
+  - [ ] `step`
+
+
+
 
 *This TODO list is maintained as part of the TyafeBase development roadmap. Items are prioritized based on impact, effort, and dependencies. Regular reviews should be conducted to adjust priorities based on changing requirements and feedback.*
