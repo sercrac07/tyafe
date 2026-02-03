@@ -1,6 +1,6 @@
-# Tyafe
-
 <div align="center">
+
+  # Tyafe
 
   ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue?colorA=313244&colorB=74c7ec&style=for-the-badge)
   ![Bundle Size](https://img.shields.io/bundlephobia/minzip/tyafe?colorA=313244&colorB=94e2d5&style=for-the-badge)
