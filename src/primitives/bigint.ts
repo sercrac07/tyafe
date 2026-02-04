@@ -42,7 +42,7 @@ export class TyafeBigint extends TyafeBase<bigint, bigint, { error: string }> {
   public min(min: bigint, config?: string | ValidatorConfig): this {
     const issue = this.buildIssue(
       ERROR_CODES.BIGINT.MIN,
-      `Bigint must be at least ${min}`,
+      `BigInt must be at least ${min}`,
       config,
     );
 
@@ -55,7 +55,7 @@ export class TyafeBigint extends TyafeBase<bigint, bigint, { error: string }> {
   public max(max: bigint, config?: string | ValidatorConfig): this {
     const issue = this.buildIssue(
       ERROR_CODES.BIGINT.MAX,
-      `Bigint must be at most ${max}`,
+      `BigInt must be at most ${max}`,
       config,
     );
 
@@ -68,7 +68,7 @@ export class TyafeBigint extends TyafeBase<bigint, bigint, { error: string }> {
   public positive(config?: string | ValidatorConfig): this {
     const issue = this.buildIssue(
       ERROR_CODES.BIGINT.POSITIVE,
-      "Bigint must be a positive number",
+      "BigInt must be a positive number",
       config,
     );
 
@@ -81,7 +81,7 @@ export class TyafeBigint extends TyafeBase<bigint, bigint, { error: string }> {
   public negative(config?: string | ValidatorConfig): this {
     const issue = this.buildIssue(
       ERROR_CODES.BIGINT.NEGATIVE,
-      "Bigint must be a negative number",
+      "BigInt must be a negative number",
       config,
     );
 
