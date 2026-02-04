@@ -6,6 +6,9 @@ export class TyafeIntersection<
   T extends TyafeBase<any, any>[],
 > extends TyafeBase<InputIntersection<T>, OutputIntersection<T>> {
   public override readonly kind: "intersection" = "intersection";
+  /**
+   * Array of schemas whose results are merged according to intersection rules.
+   */
   public readonly schemas: [...T];
 
   constructor(schemas: [...T]) {

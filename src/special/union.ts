@@ -7,6 +7,9 @@ export class TyafeUnion<T extends TyafeBase<any, any>[]> extends TyafeBase<
   Output<T[number]>
 > {
   public override readonly kind: "union" = "union";
+  /**
+   * Array of candidate schemas evaluated until one succeds.
+   */
   public readonly schemas: [...T];
 
   constructor(schemas: [...T]) {

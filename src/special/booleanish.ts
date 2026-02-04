@@ -8,7 +8,13 @@ export class TyafeBooleanish extends TyafeBase<
   { error: string }
 > {
   public override kind: "booleanish" = "booleanish";
+  /**
+   * String values interpreted as `true`.
+   */
   public readonly trueValues: Set<string>;
+  /**
+   * String values interpreted as `false`.
+   */
   public readonly falseValues: Set<string>;
 
   constructor(trueValues: string[], falseValues: string[], error?: string) {

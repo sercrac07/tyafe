@@ -6,6 +6,9 @@ export class TyafeNullable<T extends TyafeBase<any, any>> extends TyafeBase<
   Output<T> | null
 > {
   public override readonly kind: "nullable" = "nullable";
+  /**
+   * Wrapped schema whose input/output becomes `null`-able.
+   */
   public readonly schema: T;
 
   constructor(schema: T) {

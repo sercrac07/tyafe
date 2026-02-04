@@ -11,6 +11,9 @@ export class TyafeObject<
   { error: string }
 > {
   public override readonly kind: "object" = "object";
+  /**
+   * Object shape definition: maps each key to its corresponding schema type.
+   */
   public readonly shape: T = {} as T;
 
   constructor(shape: T, error?: string) {

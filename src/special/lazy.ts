@@ -6,6 +6,9 @@ export class TyafeLazy<T extends TyafeBase<any, any>> extends TyafeBase<
   Output<T>
 > {
   public override readonly kind: "lazy" = "lazy";
+  /**
+   * Factory function returning the schema lazily (e.g., for recursive schemas).
+   */
   public readonly schema: () => T;
 
   constructor(schema: () => T) {

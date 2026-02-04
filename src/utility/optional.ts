@@ -6,6 +6,9 @@ export class TyafeOptional<T extends TyafeBase<any, any>> extends TyafeBase<
   Output<T> | undefined
 > {
   public override readonly kind: "optional" = "optional";
+  /**
+   * Wrapped schema whose input/output becomes optional.
+   */
   public readonly schema: T;
 
   constructor(schema: T) {

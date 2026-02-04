@@ -9,6 +9,9 @@ export class TyafeArray<T extends TyafeBase<any, any>> extends TyafeBase<
   { error: string }
 > {
   public override readonly kind: "array" = "array";
+  /**
+   * Element schema applied to every item in the array.
+   */
   public readonly schema: T;
 
   constructor(schema: T, error?: string) {

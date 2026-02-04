@@ -7,8 +7,17 @@ export class TyafeMutate<
   To extends TyafeBase<any, any>,
 > extends TyafeBase<Input<From>, Output<To>> {
   public override readonly kind: "mutate" = "mutate";
+  /**
+   * Source schema whose output is the input to the mutation.
+   */
   public readonly from: From;
+  /**
+   * Target schema that validates the result of the mutation.
+   */
   public readonly to: To;
+  /**
+   * Mutator function that transforms the output of the source schema into the input of the target schema.
+   */
   public readonly mutator: Mutator<Output<From>, Input<To>>;
 
   constructor(from: From, to: To, mutator: Mutator<Output<From>, Input<To>>) {

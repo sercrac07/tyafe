@@ -12,7 +12,13 @@ export class TyafeRecord<
   { error: string }
 > {
   public override readonly kind: "record" = "record";
+  /**
+   * Key schema applied to every key in the record.
+   */
   public readonly key: Key;
+  /**
+   * Value schema applied to every value in the record.
+   */
   public readonly value: Value;
 
   constructor(key: Key, value: Value, error?: string) {

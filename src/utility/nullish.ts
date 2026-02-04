@@ -6,6 +6,9 @@ export class TyafeNullish<T extends TyafeBase<any, any>> extends TyafeBase<
   Output<T> | undefined | null
 > {
   public override readonly kind: "nullish" = "nullish";
+  /**
+   * Wrapped schema whose input/output becomes `null | undefined`.
+   */
   public readonly schema: T;
 
   constructor(schema: T) {

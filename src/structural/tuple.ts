@@ -9,6 +9,9 @@ export class TyafeTuple<T extends TyafeBase<any, any>[]> extends TyafeBase<
   { error: string }
 > {
   public override readonly kind: "tuple" = "tuple";
+  /**
+   * Tuple schema: array of schemas for each tuple element.
+   */
   public readonly schemas: [...T];
 
   constructor(schemas: [...T], error?: string) {
