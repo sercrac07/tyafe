@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { type T, t } from "../src";
-import type { Expect } from "./utils";
+import { type T, t } from "../../src";
+import type { Expect } from "../utils";
 
 const _schema = t.number();
 const _input: Expect<T.Input<typeof _schema>, number> = null as any;
@@ -13,6 +13,10 @@ describe("number schema", () => {
 
   it("should parse", () => {
     expect(t.number().parse(12)).toBe(12);
+
+    expect(t.number().parse(Infinity)).toBe(Infinity);
+    expect(t.number().parse(-Infinity)).toBe(-Infinity);
+    expect(t.number().parse(-0)).toBe(-0);
 
     expect(t.number().min(12).parse(12)).toBe(12);
     expect(t.number().max(12).parse(12)).toBe(12);
@@ -28,6 +32,8 @@ describe("number schema", () => {
     expect(() => t.number().parse(true)).toThrow();
     expect(() => t.number().parse(null)).toThrow();
     expect(() => t.number().parse(undefined)).toThrow();
+
+    expect(() => t.number().parse(NaN)).toThrow();
 
     expect(() => t.number().min(13).parse(12)).toThrow();
     expect(() => t.number().max(11).parse(12)).toThrow();
