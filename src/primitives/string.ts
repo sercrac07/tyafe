@@ -3,6 +3,8 @@ import { TyafeBase } from "../core/base";
 import { TyafeIssue } from "../errors";
 import type { ValidatorConfig } from "../types";
 
+export type UUIDVersion = "v1" | "v2" | "v3" | "v4" | "v5" | "any";
+
 export class TyafeString extends TyafeBase<string, string, { error: string }> {
   public override readonly kind: "string" = "string";
 
@@ -108,21 +110,90 @@ export class TyafeString extends TyafeBase<string, string, { error: string }> {
   /**
    * Ensures string is a valid URL.
    */
-  public url(config?: string | ValidatorConfig): this {
+  public url(
+    config?:
+      | string
+      | ValidatorConfig<{
+          allowedProtocols?:
+            | string[]
+            | ValidatorConfig<{ protocols: string[] }>;
+        }>,
+  ): this {
     const issue = this.buildIssue(
-      ERROR_CODES.STRING.URL,
+      ERROR_CODES.STRING.URL.BASE,
       "String must be a valid URL",
       config,
     );
 
     this.validate((value) => {
       try {
-        new URL(value);
+        const url = new URL(value);
+
+        if (
+          typeof config === "object" &&
+          typeof config.allowedProtocols === "object"
+        ) {
+          const allowedProtocols = Array.isArray(config.allowedProtocols)
+            ? config.allowedProtocols
+            : config.allowedProtocols.protocols;
+
+          if (!allowedProtocols.includes(url.protocol.replace(/:$/, ""))) {
+            return this.buildIssue(
+              ERROR_CODES.STRING.URL.PROTOCOL,
+              `URL protocol must be one of: ${allowedProtocols.join(", ")}`,
+              Array.isArray(config.allowedProtocols)
+                ? undefined
+                : config.allowedProtocols,
+            );
+          }
+        }
+
         return null;
       } catch (_error) {
         return issue;
       }
     });
+    return this;
+  }
+  /**
+   * Ensures string has a valid JSON format.
+   */
+  public json(config?: string | ValidatorConfig): this {
+    const issue = this.buildIssue(
+      ERROR_CODES.STRING.JSON,
+      "String must have a valid JSON format",
+      config,
+    );
+
+    this.validate((value) => {
+      try {
+        JSON.parse(value);
+        return null;
+      } catch (_error) {
+        return issue;
+      }
+    });
+    return this;
+  }
+  /**
+   * Ensures string is a valid UUID.
+   * Supports specific UUID versions (v1, v2, v3, v4, v5) or any valid UUID.
+   */
+  public uuid(
+    config?: string | ValidatorConfig<{ version?: UUIDVersion }>,
+  ): this {
+    const version =
+      typeof config === "object" ? config.version || "any" : "any";
+    const pattern =
+      REGEXES.UUID[version.toUpperCase() as Uppercase<UUIDVersion>];
+
+    const issue = this.buildIssue(
+      ERROR_CODES.STRING.UUID,
+      `String must be a valid UUID${version !== "any" ? ` (${version} format)` : ""}`,
+      config,
+    );
+
+    this.regex(pattern, issue);
     return this;
   }
 }

@@ -20,6 +20,22 @@ describe("string schema", () => {
     expect(t.string().regex(/john/).parse("john")).toBe("john");
     expect(t.string().email().parse("john@exam.ple")).toBe("john@exam.ple");
     expect(t.string().url().parse("https://exam.ple")).toBe("https://exam.ple");
+    expect(
+      t
+        .string()
+        .url({ allowedProtocols: ["https"] })
+        .parse("https://exam.ple"),
+    ).toBe("https://exam.ple");
+    expect(t.string().json().parse('{"name":"john"}')).toBe('{"name":"john"}');
+    expect(
+      t.string().uuid().parse("550e8400-e29b-41d4-a716-446655440000"),
+    ).toBe("550e8400-e29b-41d4-a716-446655440000");
+    expect(
+      t
+        .string()
+        .uuid({ version: "v4" })
+        .parse("550e8400-e29b-41d4-a716-446655440000"),
+    ).toBe("550e8400-e29b-41d4-a716-446655440000");
   });
 
   it("should not parse", () => {
@@ -36,5 +52,19 @@ describe("string schema", () => {
     expect(() => t.string().regex(/doe/).parse("john")).toThrow();
     expect(() => t.string().email().parse("john")).toThrow();
     expect(() => t.string().url().parse("john")).toThrow();
+    expect(() =>
+      t
+        .string()
+        .url({ allowedProtocols: ["http"] })
+        .parse("https://exam.ple"),
+    ).toThrow();
+    expect(() => t.string().json().parse("john")).toThrow();
+    expect(() => t.string().uuid().parse("john")).toThrow();
+    expect(() =>
+      t
+        .string()
+        .uuid({ version: "v1" })
+        .parse("550e8400-e29b-41d4-a716-446655440000"),
+    ).toThrow();
   });
 });

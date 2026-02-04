@@ -9,7 +9,12 @@ export const ERROR_CODES = {
     MAX: "string.max",
     REGEX: "string.regex",
     EMAIL: "string.email",
-    URL: "string.url",
+    URL: {
+      BASE: "string.url",
+      PROTOCOL: "string.url.protocol",
+    },
+    JSON: "string.json",
+    UUID: "string.uuid",
   },
   NUMBER: {
     MIN: "number.min",
@@ -43,4 +48,12 @@ export const ERROR_CODES = {
 export const REGEXES = {
   EMAIL:
     /^(?!\.)(?!.*\.\.)([a-z0-9_'+\-.]*)[a-z0-9_+-]@([a-z0-9][a-z0-9-]*\.)+[a-z]{2,}$/i,
+  UUID: {
+    V1: /^[0-9a-f]{8}-[0-9a-f]{4}-1[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
+    V2: /^[0-9a-f]{8}-[0-9a-f]{4}-2[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
+    V3: /^[0-9a-f]{8}-[0-9a-f]{4}-3[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
+    V4: /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
+    V5: /^[0-9a-f]{8}-[0-9a-f]{4}-5[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
+    ANY: /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
+  },
 } as const;

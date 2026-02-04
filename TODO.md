@@ -53,10 +53,10 @@
 
 ## TyafeString
 
-- [ ] Add more validators:
-  - [ ] `uuid`
-  - [ ] `json`
-- [ ] Add allowed protocols on `url` validation
+- [x] Add more validators:
+  - [x] `uuid`
+  - [x] `json`
+- [x] Add allowed protocols on `url` validation
 
 ## TyafeNumber
 
