@@ -156,7 +156,7 @@ describe("base functionality", () => {
         .preprocess((value) => String(value))
         .preprocess<string>(async (value) => value.toUpperCase())
         .parse("john"),
-    ).toThrow;
+    ).toThrow();
 
     await expect(
       t
