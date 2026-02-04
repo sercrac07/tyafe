@@ -23,6 +23,6 @@
     "module": "nodenext",
     "moduleResolution": "nodenext"
   },
-  "include": ["src/**/*"],
+  "include": ["src", "test"],
   "exclude": ["node_modules", "dist", "test"]
 }
