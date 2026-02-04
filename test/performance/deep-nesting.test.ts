@@ -42,7 +42,6 @@ describe("Deep Nesting Performance", () => {
 
     // Should handle 1000 elements efficiently (< 50ms)
     const parseTime = endTime - startTime;
-    console.log(parseTime);
     expect(parseTime).toBeLessThan(50);
   });
 });
