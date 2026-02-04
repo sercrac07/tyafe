@@ -39,7 +39,7 @@ export class TyafeString extends TyafeBase<string, string, { error: string }> {
   }
 
   /**
-   * Ensures string is nom-empty.
+   * Ensures string is non-empty.
    * The string is considered empty if it is an empty string or only contains whitespace characters.
    */
   public nonEmpty(config?: string | ValidatorConfig): this {
