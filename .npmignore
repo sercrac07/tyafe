@@ -9,6 +9,7 @@ test/
 tsconfig.json
 biome.json
 tsdown.config.ts
+AGENTS.md
 
 # Git
 .git/
