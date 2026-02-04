@@ -1,7 +1,6 @@
 import { ERROR_CODES } from "../constants";
 import { TyafeBase } from "../core/base";
 import { TyafeIssue } from "../errors";
-import { deepCopy } from "../lib/copy";
 
 export class TyafeNull extends TyafeBase<null, null, { error: string }> {
   public override readonly kind: "null" = "null";
@@ -32,7 +31,7 @@ export class TyafeNull extends TyafeBase<null, null, { error: string }> {
 
   public override clone(): TyafeNull {
     const newThis = new TyafeNull();
-    newThis._config = deepCopy(this._config);
+    newThis._config = this.copyConfig();
     return newThis;
   }
 }

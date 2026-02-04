@@ -1,6 +1,5 @@
 import { TyafeBase } from "../core/base";
 import { TyafeError } from "../errors";
-import { deepCopy } from "../lib/copy";
 import type { Input, Mutator, Output } from "../types";
 
 export class TyafeMutate<
@@ -48,7 +47,7 @@ export class TyafeMutate<
 
   public override clone(): TyafeMutate<From, To> {
     const newThis = new TyafeMutate(this.from, this.to, this.mutator);
-    newThis._config = deepCopy(this._config);
+    newThis._config = this.copyConfig();
     return newThis;
   }
 }

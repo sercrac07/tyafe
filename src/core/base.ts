@@ -1,6 +1,5 @@
 import { ERROR_CODES } from "../constants";
 import { TyafeError, TyafeIssue } from "../errors";
-import { deepCopy } from "../lib/copy";
 import type {
   Default,
   Issue,
@@ -23,16 +22,22 @@ export abstract class TyafeBase<
    */
   public abstract readonly kind: string;
 
+  /**
+   * Schema configuration
+   */
   protected _config: TyafeBaseConfig<I, O, ExtraConfig>;
 
   constructor(config: TyafeBaseConfig<I, O, ExtraConfig>) {
-    this._config = deepCopy(config);
+    this._config = config;
   }
 
   /**
    * Function that contains all the main logic and asserts that the input type is the wanted one.
    */
   protected abstract parseFunction(input: unknown): O;
+  /**
+   * Function that contains all the main asynchronous logic and asserts that the input type is the wanted one.
+   */
   protected abstract parseFunctionAsync(input: unknown): Promise<O>;
 
   /**
@@ -48,9 +53,9 @@ export abstract class TyafeBase<
         return this.runDefault();
       }
 
-      const preprocessed = this.runPreprocessors(input);
+      const preprocessed = this.runPreprocessors(this.deepCopy(input));
 
-      const result = this.parseFunction(deepCopy(preprocessed));
+      const result = this.parseFunction(preprocessed);
 
       const issues = this.runValidators(result);
       if (issues.length > 0) {
@@ -76,9 +81,11 @@ export abstract class TyafeBase<
         return await this.runDefaultAsync();
       }
 
-      const preprocessed = await this.runPreprocessorsAsync(input);
+      const preprocessed = await this.runPreprocessorsAsync(
+        this.deepCopy(input),
+      );
 
-      const result = await this.parseFunctionAsync(deepCopy(preprocessed));
+      const result = await this.parseFunctionAsync(preprocessed);
 
       const issues = await this.runValidatorsAsync(result);
       if (issues.length > 0) {
@@ -220,23 +227,64 @@ export abstract class TyafeBase<
     error: string,
     replacer?: string | Partial<Issue>,
   ): Issue {
-    const c = typeof replacer === "object" ? replacer.code || code : code;
+    const c = typeof replacer === "string" ? code : replacer?.code || code;
     const e =
-      typeof replacer === "object"
-        ? replacer.error || error
-        : typeof replacer === "string"
-          ? replacer
-          : error;
-    const p = typeof replacer === "object" ? replacer.path || [] : [];
+      typeof replacer === "string" ? replacer : replacer?.error || error;
+    const p = typeof replacer === "string" ? [] : replacer?.path || [];
 
     return { code: c, error: e, path: p };
+  }
+  protected deepCopy<T>(value: T): T {
+    // Primitives
+    if (value === null || typeof value !== "object") {
+      return value;
+    }
+
+    // Dates
+    if (value instanceof Date) {
+      return new Date(value.getTime()) as T;
+    }
+
+    // Files
+    if (value instanceof File) {
+      return new File([value], value.name, {
+        lastModified: value.lastModified,
+        type: value.type,
+      }) as T;
+    }
+
+    // Empty array
+    if (Array.isArray(value) && value.length === 0) {
+      return [] as T;
+    }
+
+    // Empty object
+    if (!Array.isArray(value) && Object.keys(value).length === 0) {
+      return {} as T;
+    }
+
+    // Array
+    if (Array.isArray(value)) {
+      return value.map((v) => this.deepCopy(v)) as T;
+    }
+
+    // Objects
+    return Object.fromEntries(
+      Object.keys(value).map((key) => [
+        key,
+        this.deepCopy(value[key as keyof typeof value]),
+      ]),
+    ) as T;
+  }
+  protected copyConfig(): TyafeBaseConfig<I, O, ExtraConfig> {
+    return this.deepCopy(this._config);
   }
 
   protected runValidators(input: O): Issue[] {
     const issues: Issue[] = [];
 
     for (const validator of this._config.validators) {
-      const result = validator(deepCopy(input));
+      const result = validator(input);
 
       if (result instanceof Promise) {
         throw new TyafeError(
@@ -261,7 +309,7 @@ export abstract class TyafeBase<
     const issues: Issue[] = [];
 
     for (const validator of this._config.validators) {
-      const result = await validator(deepCopy(input));
+      const result = await validator(input);
 
       if (result) {
         issues.push(
@@ -280,7 +328,7 @@ export abstract class TyafeBase<
     let processed = input;
 
     for (const processor of this._config.processors) {
-      const value = processor(deepCopy(processed));
+      const value = processor(processed);
 
       if (value instanceof Promise) {
         throw new TyafeError(
@@ -297,7 +345,7 @@ export abstract class TyafeBase<
     let processed = input;
 
     for (const processor of this._config.processors) {
-      const value = await processor(deepCopy(processed));
+      const value = await processor(processed);
       processed = value;
     }
 
@@ -307,7 +355,7 @@ export abstract class TyafeBase<
     let preprocessed = input;
 
     for (const preprocessor of this._config.preprocessors) {
-      const value = preprocessor(deepCopy(preprocessed));
+      const value = preprocessor(preprocessed);
 
       if (value instanceof Promise) {
         throw new TyafeError(
@@ -324,7 +372,7 @@ export abstract class TyafeBase<
     let preprocessed = input;
 
     for (const preprocessor of this._config.preprocessors) {
-      const value = await preprocessor(deepCopy(preprocessed));
+      const value = await preprocessor(preprocessed);
       preprocessed = value;
     }
 
@@ -340,18 +388,18 @@ export abstract class TyafeBase<
         );
       }
 
-      return deepCopy(value);
+      return this.deepCopy(value);
     }
 
-    return deepCopy(this._config.default as O);
+    return this.deepCopy(this._config.default) as O;
   }
   protected async runDefaultAsync(): Promise<O> {
     if (typeof this._config.default === "function") {
       const value = await (this._config.default as () => MaybePromise<O>)();
-      return deepCopy(value);
+      return this.deepCopy(value);
     }
 
-    return deepCopy(this._config.default as O);
+    return this.deepCopy(this._config.default) as O;
   }
   protected runFallback(): O {
     if (typeof this._config.fallback === "function") {
@@ -363,17 +411,17 @@ export abstract class TyafeBase<
         );
       }
 
-      return deepCopy(value);
+      return this.deepCopy(value);
     }
 
-    return deepCopy(this._config.fallback as O);
+    return this.deepCopy(this._config.fallback) as O;
   }
   protected async runFallbackAsync(): Promise<O> {
     if (typeof this._config.fallback === "function") {
       const value = await (this._config.fallback as () => MaybePromise<O>)();
-      return deepCopy(value);
+      return this.deepCopy(value);
     }
 
-    return deepCopy(this._config.fallback as O);
+    return this.deepCopy(this._config.fallback) as O;
   }
 }

@@ -1,7 +1,6 @@
 import { ERROR_CODES } from "../constants";
 import { TyafeBase } from "../core/base";
 import { TyafeIssue } from "../errors";
-import { deepCopy } from "../lib/copy";
 
 export class TyafeBooleanish extends TyafeBase<
   string,
@@ -54,7 +53,7 @@ export class TyafeBooleanish extends TyafeBase<
       Array.from(this.trueValues),
       Array.from(this.falseValues),
     );
-    newThis._config = deepCopy(this._config);
+    newThis._config = this.copyConfig();
     return newThis;
   }
 }

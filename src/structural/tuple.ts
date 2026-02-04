@@ -1,7 +1,6 @@
 import { ERROR_CODES } from "../constants";
 import { TyafeBase } from "../core/base";
 import { TyafeIssue } from "../errors";
-import { deepCopy } from "../lib/copy";
 import type { Input, Issue, Output } from "../types";
 
 export class TyafeTuple<T extends TyafeBase<any, any>[]> extends TyafeBase<
@@ -61,7 +60,7 @@ export class TyafeTuple<T extends TyafeBase<any, any>[]> extends TyafeBase<
       throw new TyafeIssue(issues);
     }
 
-    return deepCopy(result) as { [K in keyof T]: Output<T[K]> };
+    return result as { [K in keyof T]: Output<T[K]> };
   }
   protected override async parseFunctionAsync(input: unknown): Promise<{
     [K in keyof T]: Output<T[K]>;
@@ -99,12 +98,12 @@ export class TyafeTuple<T extends TyafeBase<any, any>[]> extends TyafeBase<
       throw new TyafeIssue(issues);
     }
 
-    return deepCopy(result) as { [K in keyof T]: Output<T[K]> };
+    return result as { [K in keyof T]: Output<T[K]> };
   }
 
   public override clone(): TyafeTuple<T> {
     const newThis = new TyafeTuple(this.schemas);
-    newThis._config = deepCopy(this._config);
+    newThis._config = this.copyConfig();
     return newThis;
   }
 }

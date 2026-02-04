@@ -3,7 +3,7 @@
 ## Global
 
 - [ ] Improve error and informative messages
-- [ ] Remove unnecessary `deepCopy`
+- [x] Remove unnecessary `deepCopy`
 - [ ] Fix naming inconsistencies
 - [ ] Validation bottleneck
 - [ ] Improve schemas configuration
@@ -49,13 +49,9 @@
 - [x] Add advanced schema composition testing
 - [x] Create complex combined schema tests
 
-## Types
-
-- [ ] Add input attribute to display what caused the fail
-
 ## TyafeBase
 
-- [ ] Control the usage of deep copy
+- [x] Control the usage of deep copy
 
 ## TyafeString
 

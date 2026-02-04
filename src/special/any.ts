@@ -1,5 +1,4 @@
 import { TyafeBase } from "../core/base";
-import { deepCopy } from "../lib/copy";
 
 export class TyafeAny extends TyafeBase<any, any> {
   public override readonly kind: "any" = "any";
@@ -23,7 +22,7 @@ export class TyafeAny extends TyafeBase<any, any> {
 
   public override clone(): TyafeAny {
     const newThis = new TyafeAny();
-    newThis._config = deepCopy(this._config);
+    newThis._config = this.copyConfig();
     return newThis;
   }
 }

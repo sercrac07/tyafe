@@ -1,7 +1,6 @@
 import { ERROR_CODES } from "../constants";
 import { TyafeBase } from "../core/base";
 import { TyafeIssue } from "../errors";
-import { deepCopy } from "../lib/copy";
 
 export class TyafeUndefined extends TyafeBase<
   undefined,
@@ -38,7 +37,7 @@ export class TyafeUndefined extends TyafeBase<
 
   public override clone(): TyafeUndefined {
     const newThis = new TyafeUndefined();
-    newThis._config = deepCopy(this._config);
+    newThis._config = this.copyConfig();
     return newThis;
   }
 }

@@ -1,5 +1,4 @@
 import { TyafeBase } from "../core/base";
-import { deepCopy } from "../lib/copy";
 import type { Input, Output } from "../types";
 
 export class TyafeNullable<T extends TyafeBase<any, any>> extends TyafeBase<
@@ -40,7 +39,7 @@ export class TyafeNullable<T extends TyafeBase<any, any>> extends TyafeBase<
 
   public override clone(): TyafeNullable<T> {
     const newThis = new TyafeNullable(this.schema);
-    newThis._config = deepCopy(this._config);
+    newThis._config = this.copyConfig();
     return newThis;
   }
 }

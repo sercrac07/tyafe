@@ -1,7 +1,6 @@
 import { ERROR_CODES } from "../constants";
 import { TyafeBase } from "../core/base";
 import { TyafeIssue } from "../errors";
-import { deepCopy } from "../lib/copy";
 import type { ValidatorConfig } from "../types";
 
 export class TyafeFile extends TyafeBase<File, File, { error: string }> {
@@ -25,7 +24,7 @@ export class TyafeFile extends TyafeBase<File, File, { error: string }> {
       ]);
     }
 
-    return deepCopy(input);
+    return input;
   }
   protected override async parseFunctionAsync(input: unknown): Promise<File> {
     return this.parseFunction(input);
@@ -33,7 +32,7 @@ export class TyafeFile extends TyafeBase<File, File, { error: string }> {
 
   public override clone(): TyafeFile {
     const newThis = new TyafeFile();
-    newThis._config = deepCopy(this._config);
+    newThis._config = this.copyConfig();
     return newThis;
   }
 

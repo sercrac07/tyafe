@@ -1,6 +1,5 @@
 import { TyafeBase } from "../core/base";
 import { TyafeIssue } from "../errors";
-import { deepCopy } from "../lib/copy";
 import type { InputIntersection, Issue, OutputIntersection } from "../types";
 
 export class TyafeIntersection<
@@ -92,7 +91,7 @@ export class TyafeIntersection<
 
   public override clone(): TyafeIntersection<T> {
     const newThis = new TyafeIntersection(this.schemas);
-    newThis._config = deepCopy(this._config);
+    newThis._config = this.copyConfig();
     return newThis;
   }
 }

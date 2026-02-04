@@ -1,7 +1,6 @@
 import { ERROR_CODES } from "../constants";
 import { TyafeBase } from "../core/base";
 import { TyafeIssue } from "../errors";
-import { deepCopy } from "../lib/copy";
 
 export class TyafeSymbol extends TyafeBase<symbol, symbol, { error: string }> {
   public override readonly kind: "symbol" = "symbol";
@@ -32,7 +31,7 @@ export class TyafeSymbol extends TyafeBase<symbol, symbol, { error: string }> {
 
   public override clone(): TyafeSymbol {
     const newThis = new TyafeSymbol();
-    newThis._config = deepCopy(this._config);
+    newThis._config = this.copyConfig();
     return newThis;
   }
 }
