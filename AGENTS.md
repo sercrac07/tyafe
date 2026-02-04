@@ -17,9 +17,6 @@ npm test -- test/string.test.ts
 # Run tests in watch mode for development
 npm run test:watch
 
-# Run tests with coverage
-npm run test -- --coverage
-
 # Run tests matching pattern
 npm test -- "primitive.*"
 npm test -- "array.*"
@@ -42,9 +39,6 @@ npm run lint:fix
 
 # Format code (Biome)
 npm run format
-
-# Format with auto-fix
-npm run format:fix
 
 # Complete quality check
 npm run check
@@ -137,7 +131,6 @@ const _output: Expect<T.Output<typeof _schema>, ExpectedOutputType> = null as an
 
 ```typescript
 export class TyafeNewSchema extends TyafeBase<InputType, OutputType, { error: string }> {
-  // Required: Schema identifier (literal type)
   public override readonly kind: "newSchema" = "newSchema";
 
   constructor(error?: string) {
@@ -151,7 +144,6 @@ export class TyafeNewSchema extends TyafeBase<InputType, OutputType, { error: st
     });
   }
 
-  // Required: Synchronous parsing
   protected override parseFunction(input: unknown): OutputType {
     if (!isValidType(input)) {
       throw new TyafeIssue([
@@ -161,12 +153,10 @@ export class TyafeNewSchema extends TyafeBase<InputType, OutputType, { error: st
     return transform(input);
   }
 
-  // Required: Asynchronous parsing (delegate to sync unless async needed)
   protected override async parseFunctionAsync(input: unknown): Promise<OutputType> {
     return this.parseFunction(input);
   }
 
-  // Required: Deep cloning
   public override clone(): TyafeNewSchema {
     const newThis = new TyafeNewSchema();
     newThis._config = deepCopy(this._config);
@@ -181,7 +171,6 @@ export class TyafeNewSchema extends TyafeBase<InputType, OutputType, { error: st
 // Always use ERROR_CODES from constants
 ERROR_CODES.CORE.INVALID_TYPE
 ERROR_CODES.STRING.MIN
-ERROR_CODES.NUMBER.POSITIVE
 
 // Use buildIssue helper for consistency
 const issue = this.buildIssue(
@@ -194,30 +183,9 @@ const issue = this.buildIssue(
 issues.push(
   ...parsed.issues.map((issue) => ({
     ...issue,
-    path: [index, ...issue.path]  // Array
-    // or path: [key, ...issue.path]  // Object
+    path: [index, ...issue.path]
   }))
 );
-```
-
-### Async/Sync Separation
-
-```typescript
-// Sync method: Throw error for async operations
-protected override parseFunction(input: unknown): OutputType {
-  if (isAsyncValidator) {
-    throw new TyafeError("Async validator must be parsed with an async parser");
-  }
-  return syncLogic(input);
-}
-
-// Async method: Handle async operations
-protected override async parseFunctionAsync(input: unknown): Promise<OutputType> {
-  if (isAsyncValidator) {
-    return await asyncLogic(input);
-  }
-  return this.parseFunction(input);
-}
 ```
 
 ## Testing Standards
@@ -229,7 +197,6 @@ import { describe, expect, it } from "vitest";
 import { type T, t } from "../src";
 import type { Expect } from "./utils";
 
-// Type inference tests (compile-time)
 const _schema = t.newSchema();
 const _input: Expect<T.Input<typeof _schema>, ExpectedInputType> = null as any;
 const _output: Expect<T.Output<typeof _schema>, ExpectedOutputType> = null as any;
@@ -239,85 +206,14 @@ describe("newSchema schema", () => {
     expect(t.newSchema).toBeDefined();
   });
 
-  // Success cases: valid inputs should parse
   it("should parse valid input", () => {
     expect(_schema.parse(validInput)).toBe(expectedOutput);
   });
 
-  // Failure cases: invalid inputs should throw
   it("should throw on invalid input", () => {
     expect(() => _schema.parse(invalidInput)).toThrow();
   });
-
-  // Type inference: ensure TypeScript types are correct
-  it("should have correct types", () => {
-    // This test passes at compile time if types are correct
-    const _test: Expect<T.Output<typeof _schema>, ExpectedOutputType> = null as any;
-  });
 });
-```
-
-### Test Coverage Requirements
-
-Every schema must include:
-
-- ✅ Definition test (schema exists)
-- ✅ Success cases (valid inputs)
-- ✅ Failure cases (invalid inputs, wrong types)
-- ✅ Edge cases (boundaries, special values)
-- ✅ Clone test (schema cloning works)
-- ✅ Pipeline tests (method chaining)
-- ✅ Async tests (if applicable)
-
-## File Organization
-
-### Directory Structure
-
-```
-src/
-├── core/          # Base classes (always extends TyafeBase)
-├── primitives/    # Basic types (string, number, etc.)
-├── structural/    # Complex structures (object, array, etc.)
-├── utility/       # Wrappers (optional, nullable, etc.)
-├── special/       # Advanced patterns (union, intersection, etc.)
-├── lib/           # Utility functions (copy, etc.)
-├── constants.ts   # Error codes, regex patterns
-├── types.ts       # Type definitions
-├── errors.ts      # Error classes
-└── schemas.ts     # Public API factory functions
-```
-
-### File Naming
-
-- Schema files: `kebab-case.ts` (e.g., `string-validator.ts`)
-- Test files: `schema-name.test.ts` (e.g., `string.test.ts`)
-- Type files: `types.ts` (single file for all types)
-- Constant files: `constants.ts` (single file for all constants)
-
-## Quality Gates
-
-### Before Submitting Changes
-
-1. **Type Checking**: `npm run typecheck` must pass
-2. **Linting**: `npm run lint` must have no errors
-3. **Testing**: `npm test` must pass all tests
-4. **Building**: `npm run build` must succeed
-5. **Formatting**: Code must be properly formatted
-
-### Single Test Development Workflow
-
-```bash
-# 1. Run specific test file repeatedly
-npm test -- string.test.ts
-
-# 2. Or run tests in watch mode
-npm run test:watch
-
-# 3. Focus on specific test pattern
-npm test -- "string.*email"
-
-# 4. Check only specific test
-npm test -- --reporter=verbose --testNamePattern="email"
 ```
 
 ## Common Patterns
@@ -345,28 +241,18 @@ public override clone(): TyafeNewSchema {
 }
 ```
 
-### Error Creation Pattern
+## Quality Gates
 
-```typescript
-// Use buildIssue helper with proper error codes
-const issue = this.buildIssue(
-  ERROR_CODES.CATEGORY.SPECIFIC_CODE,
-  "Human-readable error message",
-  config  // string or ValidatorConfig with code, error, path
-);
-```
-
-## Memory & Performance Guidelines
-
-- Use `deepCopy` only when necessary (schema cloning, immutable returns)
-- Prefer early returns in validation methods
-- Use Set-based lookups for booleanish values (O(1) performance)
-- Lazy evaluation for recursive schemas to prevent infinite loops
+Before submitting changes:
+1. **Type Checking**: `npm run typecheck` must pass
+2. **Linting**: `npm run lint` must have no errors  
+3. **Testing**: `npm test` must pass all tests
+4. **Building**: `npm run build` must succeed
+5. **Formatting**: Code must be properly formatted
 
 ## AI-Specific Guidelines
 
 When implementing features:
-
 1. **Preserve existing patterns** - Don't refactor established patterns without discussion
 2. **Maintain type safety** - Ensure TypeScript strict mode compliance
 3. **Add comprehensive tests** - Cover success, failure, and edge cases
