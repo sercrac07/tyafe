@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ERROR_CODES, t } from "../src";
+import { ERROR_CODES, t } from "../../src";
 
 describe("base functionality", () => {
   it("should parse", () => {

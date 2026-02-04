@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { type T, t } from "../src";
-import type { Expect } from "./utils";
+import { type T, t } from "../../src";
+import type { Expect } from "../utils";
 
 const _schema = t.boolean();
 const _input: Expect<T.Input<typeof _schema>, boolean> = null as any;

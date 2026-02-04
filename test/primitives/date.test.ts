@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { type T, t } from "../src";
-import type { Expect } from "./utils";
+import { type T, t } from "../../src";
+import type { Expect } from "../utils";
 
 const _schema = t.date();
 const _input: Expect<T.Input<typeof _schema>, Date> = null as any;
