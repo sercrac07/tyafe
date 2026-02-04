@@ -23,4 +23,35 @@ describe("union schema", () => {
     expect(() => t.union([t.string(), t.number()]).parse(null)).toThrow();
     expect(() => t.union([t.string(), t.number()]).parse(undefined)).toThrow();
   });
+
+  it("should handle deeply nested unions", () => {
+    const schema = t.union([
+      t.object({ type: t.literal("user"), data: t.string() }),
+      t.object({
+        type: t.literal("admin"),
+        data: t.string(),
+        permissions: t.array(t.string()),
+      }),
+      t.union([
+        t.object({ type: t.literal("guest"), data: t.string() }),
+        t.object({
+          type: t.literal("bot"),
+          data: t.string(),
+          token: t.string(),
+        }),
+      ]),
+    ]);
+
+    const testCases: T.Input<typeof schema>[] = [
+      { type: "user", data: "john" },
+      { type: "admin", data: "admin", permissions: ["read", "write"] },
+      { type: "guest", data: "guest" },
+      { type: "bot", data: "bot", token: "abc123" },
+    ];
+
+    for (const testCase of testCases) {
+      const result = schema.parse(testCase);
+      expect(result).toEqual(testCase);
+    }
+  });
 });

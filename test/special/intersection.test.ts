@@ -75,4 +75,51 @@ describe("intersection schema", () => {
         .parse(undefined),
     ).toThrow();
   });
+
+  it("should handle intersection of complex objects", () => {
+    const userSchema = t.object({
+      id: t.number(),
+      name: t.string(),
+      email: t.string(),
+    });
+
+    const userProfileSchema = t.object({
+      bio: t.string(),
+      avatar: t.string().url(),
+    });
+
+    const combinedSchema = t.intersection([userSchema, userProfileSchema]);
+
+    const validUser: T.Input<typeof combinedSchema> = {
+      id: 1,
+      name: "John",
+      email: "john@example.com",
+      bio: "Software developer",
+      avatar: "https://example.com/avatar.jpg",
+    };
+
+    const result = combinedSchema.parse(validUser);
+    expect(result).toEqual(validUser);
+  });
+
+  it("should handle intersection with conflicts", () => {
+    const schema1 = t.object({
+      id: t.number(),
+      name: t.string(),
+    });
+
+    const schema2 = t.object({
+      id: t.string(), // Different type - should cause conflict
+      name: t.string(),
+    });
+
+    const intersectionSchema = t.intersection([schema1, schema2]);
+
+    expect(() =>
+      intersectionSchema.parse({
+        id: 1,
+        name: "test",
+      }),
+    ).toThrow();
+  });
 });
