@@ -1,7 +1,6 @@
 import { ERROR_CODES, REGEXES } from "../constants";
 import { TyafeBase } from "../core/base";
 import { TyafeIssue } from "../errors";
-import { deepCopy } from "../lib/copy";
 import type { ValidatorConfig } from "../types";
 
 export class TyafeString extends TyafeBase<string, string, { error: string }> {
@@ -33,7 +32,7 @@ export class TyafeString extends TyafeBase<string, string, { error: string }> {
 
   public override clone(): TyafeString {
     const newThis = new TyafeString();
-    newThis._config = deepCopy(this._config);
+    newThis._config = this.copyConfig();
     return newThis;
   }
 

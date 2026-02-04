@@ -1,6 +1,5 @@
 import { TyafeBase } from "../core/base";
 import { TyafeIssue } from "../errors";
-import { deepCopy } from "../lib/copy";
 import type { Input, Issue, Output } from "../types";
 
 export class TyafeUnion<T extends TyafeBase<any, any>[]> extends TyafeBase<
@@ -57,7 +56,7 @@ export class TyafeUnion<T extends TyafeBase<any, any>[]> extends TyafeBase<
 
   public override clone(): TyafeUnion<T> {
     const newThis = new TyafeUnion(this.schemas);
-    newThis._config = deepCopy(this._config);
+    newThis._config = this.copyConfig();
     return newThis;
   }
 }

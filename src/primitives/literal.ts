@@ -1,7 +1,6 @@
 import { ERROR_CODES } from "../constants";
 import { TyafeBase } from "../core/base";
 import { TyafeIssue } from "../errors";
-import { deepCopy } from "../lib/copy";
 import type { LiteralParts } from "../types";
 
 export class TyafeLiteral<T extends LiteralParts> extends TyafeBase<
@@ -42,7 +41,7 @@ export class TyafeLiteral<T extends LiteralParts> extends TyafeBase<
 
   public override clone(): TyafeLiteral<T> {
     const newThis = new TyafeLiteral(this.value);
-    newThis._config = deepCopy(this._config);
+    newThis._config = this.copyConfig();
     return newThis;
   }
 }

@@ -1,7 +1,6 @@
 import { ERROR_CODES } from "../constants";
 import { TyafeBase } from "../core/base";
 import { TyafeIssue } from "../errors";
-import { deepCopy } from "../lib/copy";
 import type { Input, Issue, Output, ValidatorConfig } from "../types";
 
 export class TyafeArray<T extends TyafeBase<any, any>> extends TyafeBase<
@@ -53,7 +52,7 @@ export class TyafeArray<T extends TyafeBase<any, any>> extends TyafeBase<
       throw new TyafeIssue(issues);
     }
 
-    return deepCopy(result);
+    return result;
   }
   protected override async parseFunctionAsync(
     input: unknown,
@@ -86,12 +85,12 @@ export class TyafeArray<T extends TyafeBase<any, any>> extends TyafeBase<
       throw new TyafeIssue(issues);
     }
 
-    return deepCopy(result);
+    return result;
   }
 
   public override clone(): TyafeArray<T> {
     const newThis = new TyafeArray(this.schema);
-    newThis._config = deepCopy(this._config);
+    newThis._config = this.copyConfig();
     return newThis;
   }
 

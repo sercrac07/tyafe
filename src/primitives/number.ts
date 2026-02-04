@@ -1,7 +1,6 @@
 import { ERROR_CODES } from "../constants";
 import { TyafeBase } from "../core/base";
 import { TyafeIssue } from "../errors";
-import { deepCopy } from "../lib/copy";
 import type { ValidatorConfig } from "../types";
 
 export class TyafeNumber extends TyafeBase<number, number, { error: string }> {
@@ -33,7 +32,7 @@ export class TyafeNumber extends TyafeBase<number, number, { error: string }> {
 
   public override clone(): TyafeNumber {
     const newThis = new TyafeNumber();
-    newThis._config = deepCopy(this._config);
+    newThis._config = this.copyConfig();
     return newThis;
   }
 
