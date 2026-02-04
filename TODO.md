@@ -7,44 +7,47 @@
 - [ ] Fix naming inconsistencies
 - [ ] Validation bottleneck
 - [ ] Improve schemas configuration
+- [x] Add exports for each `Tyafe` schema class
 
 ## Tests
 
+### Structure
+
+- [x] Group schemas by type
+
 ### Async Testing
 
-- [ ] Create comprehensive async test suite (parseAsync, safeParseAsync)
-- [ ] Add async validation and processing tests
-- [ ] Implement async transformation testing
+- [x] Create comprehensive async test suite (parseAsync, safeParseAsync)
+- [x] Add async validation and processing tests
+- [x] Implement async transformation testing
 
 ### Performance & Memory Testing  
 
-- [ ] Implement memory leak detection tests
-- [ ] Create deep nesting performance tests (>10 levels)
-- [ ] Add deep schema chain performance tests
+- [x] Implement memory leak detection tests
+- [x] Create deep nesting performance tests (>10 levels)
+- [x] Add deep schema chain performance tests
 
 ### Error Handling Testing
 
-- [ ] Implement custom error message testing
-- [ ] Add error code validation tests
-- [ ] Create multiple error collection tests
-- [ ] Implement nested error path tracing
+- [x] Implement custom error message testing
+- [x] Add error code validation tests
+- [x] Create multiple error collection tests
+- [x] Implement nested error path tracing
 
 ### Data Type Edge Cases
 
-- [ ] Add special number value tests (NaN, Infinity, -Infinity, -0)
-- [ ] Create Unicode string testing (emojis, special characters)
-- [ ] Add encoding edge case tests
-- [ ] Implement invalid date boundary testing
-- [ ] Add timezone boundary tests
-- [ ] Create date overflow scenario tests
+- [x] Add special number value tests (NaN, Infinity, -Infinity, -0)
+- [x] Implement invalid date boundary testing
+- [x] Add timezone boundary tests
+- [x] Create date overflow scenario tests
 
 ### Schema Composition Testing
 
-- [ ] Add recursive schema testing (circular references)
-- [ ] Create complex union/intersection chain tests
-- [ ] Implement enhanced deep nesting scenarios
-- [ ] Add advanced schema composition testing
-- [ ] Create complex combined schema tests
+- [x] Add recursive schema testing (circular references)
+- [x] Create complex union/intersection chain tests
+- [x] Implement enhanced deep nesting scenarios
+- [x] Add advanced schema composition testing
+- [x] Create complex combined schema tests
 
 ## Types
 
@@ -67,8 +70,5 @@
 - [ ] Add more validators:
   - [ ] `safeInteger`
   - [ ] `step`
-
-
-
 
 *This TODO list is maintained as part of the TyafeBase development roadmap. Items are prioritized based on impact, effort, and dependencies. Regular reviews should be conducted to adjust priorities based on changing requirements and feedback.*
