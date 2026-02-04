@@ -108,29 +108,29 @@ export class TyafeArray<T extends TyafeBase<any, any>> extends TyafeBase<
     return this;
   }
   /**
-   * Ensures array length is at least `length`.
+   * Ensures array length is at least `minLength`.
    */
-  public min(length: number, config?: string | ValidatorConfig): this {
+  public min(minLength: number, config?: string | ValidatorConfig): this {
     const issue = this.buildIssue(
       ERROR_CODES.ARRAY.MIN,
-      `Array must be at least ${length} items long`,
+      `Array must be at least ${minLength} items long`,
       config,
     );
 
-    this.validate((value) => (value.length >= length ? null : issue));
+    this.validate((value) => (value.length >= minLength ? null : issue));
     return this;
   }
   /**
-   * Ensures array length is at most `length`.
+   * Ensures array length is at most `maxLength`.
    */
-  public max(length: number, config?: string | ValidatorConfig): this {
+  public max(maxLength: number, config?: string | ValidatorConfig): this {
     const issue = this.buildIssue(
       ERROR_CODES.ARRAY.MAX,
-      `Array must be at most ${length} items long`,
+      `Array must be at most ${maxLength} items long`,
       config,
     );
 
-    this.validate((value) => (value.length <= length ? null : issue));
+    this.validate((value) => (value.length <= maxLength ? null : issue));
     return this;
   }
 }

@@ -37,29 +37,29 @@ export class TyafeFile extends TyafeBase<File, File, { error: string }> {
   }
 
   /**
-   * Ensures file size is greater than or equal to `bytes`.
+   * Ensures file size is greater than or equal to `minSize` (bytes).
    */
-  min(bytes: number, config?: string | ValidatorConfig): this {
+  min(minSize: number, config?: string | ValidatorConfig): this {
     const issue = this.buildIssue(
       ERROR_CODES.FILE.MIN,
-      `File must be at least ${bytes} bytes`,
+      `File must be at least ${minSize} bytes`,
       config,
     );
 
-    this.validate((value) => (value.size >= bytes ? null : issue));
+    this.validate((value) => (value.size >= minSize ? null : issue));
     return this;
   }
   /**
-   * Ensures file size is less than or equal to `bytes`.
+   * Ensures file size is less than or equal to `maxSize` (bytes).
    */
-  max(bytes: number, config?: string | ValidatorConfig): this {
+  max(maxSize: number, config?: string | ValidatorConfig): this {
     const issue = this.buildIssue(
       ERROR_CODES.FILE.MAX,
-      `File must be at most ${bytes} bytes`,
+      `File must be at most ${maxSize} bytes`,
       config,
     );
 
-    this.validate((value) => (value.size <= bytes ? null : issue));
+    this.validate((value) => (value.size <= maxSize ? null : issue));
     return this;
   }
   /**

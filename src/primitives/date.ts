@@ -37,32 +37,32 @@ export class TyafeDate extends TyafeBase<Date, Date, { error: string }> {
   }
 
   /**
-   * Ensures date is greater than or equal to `value`
+   * Ensures date is greater than or equal to `minDate`
    */
-  public min(date: Date, config?: string | ValidatorConfig): this {
+  public min(minDate: Date, config?: string | ValidatorConfig): this {
     const issue = this.buildIssue(
       ERROR_CODES.DATE.MIN,
-      `Date must be on or after ${date.toDateString()}`,
+      `Date must be on or after ${minDate.toDateString()}`,
       config,
     );
 
     this.validate((value) =>
-      value.getTime() >= date.getTime() ? null : issue,
+      value.getTime() >= minDate.getTime() ? null : issue,
     );
     return this;
   }
   /**
-   * Ensures date is less than or equal to `value`.
+   * Ensures date is less than or equal to `maxDate`.
    */
-  public max(date: Date, config?: string | ValidatorConfig): this {
+  public max(maxDate: Date, config?: string | ValidatorConfig): this {
     const issue = this.buildIssue(
       ERROR_CODES.DATE.MAX,
-      `Date must be on or before ${date.toDateString()}`,
+      `Date must be on or before ${maxDate.toDateString()}`,
       config,
     );
 
     this.validate((value) =>
-      value.getTime() <= date.getTime() ? null : issue,
+      value.getTime() <= maxDate.getTime() ? null : issue,
     );
     return this;
   }

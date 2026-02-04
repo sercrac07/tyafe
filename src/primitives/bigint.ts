@@ -37,29 +37,29 @@ export class TyafeBigint extends TyafeBase<bigint, bigint, { error: string }> {
   }
 
   /**
-   * Ensures bigint is greater than or equal to `value`.
+   * Ensures bigint is greater than or equal to `min`.
    */
-  public min(minValue: bigint, config?: string | ValidatorConfig): this {
+  public min(min: bigint, config?: string | ValidatorConfig): this {
     const issue = this.buildIssue(
       ERROR_CODES.BIGINT.MIN,
-      `Bigint must be at least ${minValue}`,
+      `Bigint must be at least ${min}`,
       config,
     );
 
-    this.validate((value) => (value >= minValue ? null : issue));
+    this.validate((value) => (value >= min ? null : issue));
     return this;
   }
   /**
-   * Ensures bigint is less than or equal to `value`.
+   * Ensures bigint is less than or equal to `max`.
    */
-  public max(maxValue: bigint, config?: string | ValidatorConfig): this {
+  public max(max: bigint, config?: string | ValidatorConfig): this {
     const issue = this.buildIssue(
       ERROR_CODES.BIGINT.MAX,
-      `Bigint must be at most ${maxValue}`,
+      `Bigint must be at most ${max}`,
       config,
     );
 
-    this.validate((value) => (value <= maxValue ? null : issue));
+    this.validate((value) => (value <= max ? null : issue));
     return this;
   }
   /**

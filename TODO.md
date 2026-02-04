@@ -4,7 +4,7 @@
 
 - [ ] Improve error and informative messages
 - [x] Remove unnecessary `deepCopy`
-- [ ] Fix naming inconsistencies
+- [x] Fix naming inconsistencies
 - [ ] Validation bottleneck
 - [ ] Improve schemas configuration
 - [x] Add exports for each `Tyafe` schema class

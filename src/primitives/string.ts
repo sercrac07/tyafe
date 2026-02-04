@@ -51,29 +51,29 @@ export class TyafeString extends TyafeBase<string, string, { error: string }> {
     return this;
   }
   /**
-   * Ensures string length is at least `length`.
+   * Ensures string length is at least `minLength`.
    */
-  public min(length: number, config?: string | ValidatorConfig): this {
+  public min(minLength: number, config?: string | ValidatorConfig): this {
     const issue = this.buildIssue(
       ERROR_CODES.STRING.MIN,
-      `String must be at least ${length} characters long`,
+      `String must be at least ${minLength} characters long`,
       config,
     );
 
-    this.validate((value) => (value.length < length ? issue : null));
+    this.validate((value) => (value.length < minLength ? issue : null));
     return this;
   }
   /**
-   * Ensures string length is at most `length`.
+   * Ensures string length is at most `maxLength`.
    */
-  public max(length: number, config?: string | ValidatorConfig): this {
+  public max(maxLength: number, config?: string | ValidatorConfig): this {
     const issue = this.buildIssue(
       ERROR_CODES.STRING.MAX,
-      `String must be at most ${length} characters long`,
+      `String must be at most ${maxLength} characters long`,
       config,
     );
 
-    this.validate((value) => (value.length > length ? issue : null));
+    this.validate((value) => (value.length > maxLength ? issue : null));
     return this;
   }
   /**
