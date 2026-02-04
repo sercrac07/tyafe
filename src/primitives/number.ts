@@ -101,4 +101,40 @@ export class TyafeNumber extends TyafeBase<number, number, { error: string }> {
     this.validate((value) => (value < 0 ? null : issue));
     return this;
   }
+  /**
+   * Ensures number is between the range of an safe integer (`Number.MIN_SAFE_INTEGER` - `Number.MAX_SAFE_INTEGER`).
+   */
+  public safeInteger(config?: string | ValidatorConfig): this {
+    const issue = this.buildIssue(
+      ERROR_CODES.NUMBER.SAFE_INTEGER,
+      "Number must be in the range of an safe integer",
+      config,
+    );
+
+    this.validate((value) =>
+      value >= Number.MIN_SAFE_INTEGER && value <= Number.MAX_SAFE_INTEGER
+        ? null
+        : issue,
+    );
+    return this;
+  }
+  /**
+   * Ensures number conforms to a step interval.
+   */
+  public step(stepSize: number, config?: string | ValidatorConfig): this {
+    const issue = this.buildIssue(
+      ERROR_CODES.NUMBER.STEP,
+      `Number must be a multiple of ${stepSize}`,
+      config,
+    );
+
+    this.validate((value) => {
+      // Handle floating-point precision with tolerance
+      const tolerance =
+        Number.EPSILON * Math.max(Math.abs(value), Math.abs(stepSize));
+      const remainder = ((value % stepSize) + stepSize) % stepSize;
+      return Math.abs(remainder) < tolerance ? null : issue;
+    });
+    return this;
+  }
 }

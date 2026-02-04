@@ -23,6 +23,8 @@ describe("number schema", () => {
     expect(t.number().integer().parse(12)).toBe(12);
     expect(t.number().positive().parse(12)).toBe(12);
     expect(t.number().negative().parse(-12)).toBe(-12);
+    expect(t.number().safeInteger().parse(12)).toBe(12);
+    expect(t.number().step(4).parse(12)).toBe(12);
   });
 
   it("should not parse", () => {
@@ -40,5 +42,12 @@ describe("number schema", () => {
     expect(() => t.number().integer().parse(12.3)).toThrow();
     expect(() => t.number().positive().parse(-12)).toThrow();
     expect(() => t.number().negative().parse(12)).toThrow();
+    expect(() =>
+      t
+        .number()
+        .safeInteger()
+        .parse(Number.MAX_SAFE_INTEGER + 1),
+    ).toThrow();
+    expect(() => t.number().step(5).parse(12)).toThrow();
   });
 });

@@ -22,6 +22,8 @@ export const ERROR_CODES = {
     INTEGER: "number.integer",
     POSITIVE: "number.positive",
     NEGATIVE: "number.negative",
+    SAFE_INTEGER: "number.safe_integer",
+    STEP: "number.step",
   },
   BIGINT: {
     MIN: "bigint.min",
