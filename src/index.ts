@@ -14,6 +14,7 @@ export * from "./primitives/undefined";
 export * as t from "./schemas";
 export * from "./special/any";
 export * from "./special/booleanish";
+export * from "./special/enum";
 export * from "./special/intersection";
 export * from "./special/lazy";
 export * from "./special/mutate";
