@@ -11,6 +11,7 @@ import { TyafeSymbol } from "./primitives/symbol";
 import { TyafeUndefined } from "./primitives/undefined";
 import { TyafeAny } from "./special/any";
 import { TyafeBooleanish } from "./special/booleanish";
+import { TyafeEnum } from "./special/enum";
 import { TyafeIntersection } from "./special/intersection";
 import { TyafeLazy } from "./special/lazy";
 import { TyafeMutate } from "./special/mutate";
@@ -154,4 +155,11 @@ export function any(): TyafeAny {
   return new TyafeAny();
 }
 
-export { undefined_s as undefined, null_s as null };
+function enum_s<T extends Array<string | number>>(
+  values: [...T],
+  error?: string,
+): TyafeEnum<T> {
+  return new TyafeEnum(values, error);
+}
+
+export { undefined_s as undefined, null_s as null, enum_s as enum };
